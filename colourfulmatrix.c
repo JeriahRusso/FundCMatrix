@@ -46,7 +46,7 @@ while(1){
       scanf("%i", &columnss);
       printf("Enter the number of ROWS in your matrix>\n");
       scanf("%i", &rowss);
-      new_matrix = newMatrix(columnss, rowss);
+      new_matrix = newMatrix(rowss, columnss);
     }
     else if(chosen_option == 2){
       printMatrix(new_matrix);
