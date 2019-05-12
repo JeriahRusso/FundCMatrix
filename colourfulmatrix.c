@@ -109,6 +109,7 @@ int deleteMatrix(matrix * mtx) {
   free(mtx->data);
   /* free mtx itself */
   free(mtx);
+  mtx = NULL;
   return 0;
 }
 
