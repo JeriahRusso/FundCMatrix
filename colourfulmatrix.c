@@ -217,10 +217,11 @@ float* create_matrix(int * cols1, int* rows1){
 void create_user(user_t user[number_of_users]){
   char dont_print[20];
   char do_print[20];
-  strcpy(dont_print, "read -s");
-  strcpy(do_print, "read");
+  strcpy(dont_print, "stty -echo");
+  strcpy(do_print, "stty echo");
   
   printf("Enter a username>\n");
+  fgetc(stdin);
   scanf("%s", user->username);
   printf("Enter a password\n");
   system(dont_print);
@@ -236,8 +237,8 @@ void user_login(user_t* user, int number_of_users){
   char username_input[50];
   char password_input[50];
   int i, username_not_matched = 1, password_not_matched = 1;
-  strcpy(dont_print, "read -s");
-  strcpy(do_print, "read");
+  strcpy(dont_print, "stty -echo");
+  strcpy(do_print, "stty echo");
   
   while(username_not_matched == 1){
     
@@ -256,10 +257,11 @@ void user_login(user_t* user, int number_of_users){
     printf("Enter your password:\n");
     
     system(dont_print);
+    fgetc(stdin);
     scanf("%s", password_input);
     system(do_print);
     
-    for(i = 0; i < number_of_users; i++){
+    for(i = 0; i <= number_of_users; i++){
       if(!strcmp(password_input, user->password)){
         printf("Login Successful");
         password_not_matched = 0;
