@@ -78,6 +78,8 @@ while(logged_in == 0){
     }
   }
 }
+
+printf("Login Successful\n");
   
   while(1){
   print_menu();                                                   
@@ -247,11 +249,12 @@ void user_login(user_t* user, int number_of_users){
     
     for(i = 0; i <= number_of_users; i++){
       if(!strcmp(username_input, user->username)){
-        printf("Username matched\n");
         username_not_matched = 0;
       } 
     } 
   }
+  
+  printf("Username matched\n");
   
   while(password_not_matched == 1){
     printf("Enter your password:\n");
@@ -263,10 +266,10 @@ void user_login(user_t* user, int number_of_users){
     
     for(i = 0; i <= number_of_users; i++){
       if(!strcmp(password_input, user->password)){
-        printf("Login Successful");
         password_not_matched = 0;
               } 
     }
   }
 }
+ 
  
