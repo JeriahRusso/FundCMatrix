@@ -56,8 +56,7 @@ int main(){
   user_t user[100];
   int logged_in = 0;               
   
-  int* number_of_usersp;
-  number_of_usersp = &number_of_users;
+
   
 while(logged_in == 0){   
   
