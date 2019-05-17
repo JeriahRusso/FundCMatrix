@@ -17,15 +17,27 @@
 
 
 
+
+
+struct user {
+  char username[50];
+  char password[50];
+}; 
+typedef struct user user_t;
+
+user_t user[100];
+
+int number_of_users = 0;
+
+void user_login(user_t* user, int number_of_users);
+void create_user(user_t user[number_of_users]);
 float* create_matrix(int * cols1, int* rows1);                    /* Creates a matrix */
 int deleteMatrix(float * mtx);                                    /* Frees memory     */
 void print_menu (void);                                           /* Print menu       */
+void user_menu(void); 
 int printMatrix(float * our_matrix, int* rows1, int* cols1);      /* Print matrix     */
 
-
-
-
-
+  
 /* MAIN -----------------------------------------------------------------------------------------------------------------------------|
  *                                                                                                                                   |    
  */
@@ -35,15 +47,39 @@ int main(){
   printf(KNRM);                                                   /* Set colour palette to normal */
   float* new_matrix;                                              /* Initialise a matrix object   */
 
-  char chosen_option_char[10];                                    /* Read string, store in here   */
-  int chosen_option;                                              /* Convert string to int        */
+  char chosen_option_char[10], chosen_user_option_char[10];       /* Read string, store in here   */
+  int chosen_option, chosen_user_option;                          /* Convert string to int        */
   int rows_example = 0;                                           /* Main func rows variable      */
   int cols_example = 0;                                           /* Main func cols variable      */
   int* rows1 = &rows_example;                                     /* Pointer to rows              */
   int* cols1 = &cols_example;                                     /* Pointer to cols              */
-
+  user_t user[100];
+  int logged_in = 0;               
   
-while(1){                                                         
+  int* number_of_usersp;
+  number_of_usersp = &number_of_users;
+  
+while(logged_in == 0){   
+  
+  user_menu();
+  
+  scanf("%s", chosen_user_option_char);
+  chosen_user_option = atoi(&chosen_user_option_char[0]);
+  
+  if(chosen_user_option == 1 ||
+     chosen_user_option == 2){
+    if(chosen_user_option == 1){
+      create_user(&user[number_of_users]);
+      number_of_users++;
+    }
+    else if(chosen_user_option == 2){
+      user_login(user, number_of_users);
+      logged_in = 1;
+    }
+  }
+}
+  
+  while(1){
   print_menu();                                                   
   
   scanf("%s", chosen_option_char);
@@ -74,6 +110,14 @@ return 0;
 /* FUNCTIONS ---------------------------------------------------------------------------------------------------------------------------|
  *                                                                                                                                      |
  */
+
+void user_menu (void)
+{
+  printf("\n"
+           "1. Create new user\n"
+           "2. Login\n"
+           "Enter choice>\n");
+}
 
 void print_menu (void)
 {
@@ -165,5 +209,62 @@ float* create_matrix(int * cols1, int* rows1){
   
   return our_matrix;
     
+}
+
+
+
+
+void create_user(user_t user[number_of_users]){
+  char dont_print[20];
+  char do_print[20];
+  strcpy(dont_print, "read -s");
+  strcpy(do_print, "read");
+  
+  printf("Enter a username>\n");
+  scanf("%s", user->username);
+  printf("Enter a password\n");
+  system(dont_print);
+  scanf("%s", user->password);
+  system(do_print);
+}
+  
+
+
+void user_login(user_t* user, int number_of_users){
+  char dont_print[20];
+  char do_print[20];
+  char username_input[50];
+  char password_input[50];
+  int i, username_not_matched = 1, password_not_matched = 1;
+  strcpy(dont_print, "read -s");
+  strcpy(do_print, "read");
+  
+  while(username_not_matched == 1){
+    
+    printf("Enter your username:\n");
+    scanf("%s", username_input);
+    
+    for(i = 0; i <= number_of_users; i++){
+      if(!strcmp(username_input, user->username)){
+        printf("Username matched\n");
+        username_not_matched = 0;
+      } 
+    } 
+  }
+  
+  while(password_not_matched == 1){
+    printf("Enter your password:\n");
+    
+    system(dont_print);
+    scanf("%s", password_input);
+    system(do_print);
+    
+    for(i = 0; i < number_of_users; i++){
+      if(!strcmp(password_input, user->password)){
+        printf("Login Successful");
+        password_not_matched = 0;
+              } 
+    }
+  }
 }
  
