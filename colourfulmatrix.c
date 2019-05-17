@@ -246,7 +246,7 @@ void user_login(user_t* user, int number_of_users){
     printf("Enter your username:\n");
     scanf("%s", username_input);
     
-    for(i = 0; i <= number_of_users; i++){
+    for(i = 0; i < number_of_users; i++){
       if(!strcmp(username_input, user->username)){
         username_not_matched = 0;
       } 
@@ -263,7 +263,7 @@ void user_login(user_t* user, int number_of_users){
     scanf("%s", password_input);
     system(do_print);
     
-    for(i = 0; i <= number_of_users; i++){
+    for(i = 0; i < number_of_users; i++){
       if(!strcmp(password_input, user->password)){
         password_not_matched = 0;
               } 
