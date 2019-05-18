@@ -14,7 +14,7 @@
 #define KMAG  "\x1B[37;45m"
 #define KCYN  "\x1B[37;46m" 
 #define KWHT  "\x1B[30;47m"
-
+#define DB_NAME "db.txt"
 
 
 
@@ -36,6 +36,7 @@ int deleteMatrix(float * mtx);                                    /* Frees memor
 void print_menu (void);                                           /* Print menu       */
 void user_menu(void); 
 int printMatrix(float * our_matrix, int* rows1, int* cols1);      /* Print matrix     */
+void save_users_to_db(user_t* user, int number_of_users);
 
   
 /* MAIN -----------------------------------------------------------------------------------------------------------------------------|
@@ -69,6 +70,7 @@ while(logged_in == 0){
      chosen_user_option == 2){
     if(chosen_user_option == 1){
       create_user(&user[number_of_users]);
+      save_users_to_db(user, number_of_users);
       number_of_users++;
     }
     else if(chosen_user_option == 2){
@@ -247,7 +249,7 @@ void user_login(user_t* user, int number_of_users){
     scanf("%s", username_input);
     
     for(i = 0; i < number_of_users; i++){
-      if(!strcmp(username_input, user->username)){
+      if(!strcmp(username_input, user[i].username)){
         username_not_matched = 0;
       } 
     } 
@@ -264,11 +266,29 @@ void user_login(user_t* user, int number_of_users){
     system(do_print);
     
     for(i = 0; i < number_of_users; i++){
-      if(!strcmp(password_input, user->password)){
+      if(!strcmp(password_input, user[i].password)){
         password_not_matched = 0;
               } 
     }
   }
+}
+
+
+void save_users_to_db(user_t* user, int number_of_users){
+  FILE* fp;
+  int i;
+  
+  fp = fopen(DB_NAME, "w");
+  
+  for(i = 0; i <= number_of_users; i++){
+    fprintf(fp, "%s %s\n",
+            user[i].username,
+            user[i].password);
+      
+  }
+  
+  
+  fclose (fp);
 }
  
  
