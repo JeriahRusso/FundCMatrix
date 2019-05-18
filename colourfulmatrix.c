@@ -37,7 +37,7 @@ void print_menu (void);                                           /* Print menu 
 void user_menu(void); 
 int printMatrix(float * our_matrix, int* rows1, int* cols1);      /* Print matrix     */
 void save_users_to_db(user_t* user, int number_of_users);
-
+int load_users_from_file(user_t* user);
   
 /* MAIN -----------------------------------------------------------------------------------------------------------------------------|
  *                                                                                                                                   |    
@@ -57,6 +57,7 @@ int main(){
   user_t user[100];
   int logged_in = 0;               
   
+  number_of_users = load_users_from_file(user);
 
   
 while(logged_in == 0){   
@@ -284,11 +285,23 @@ void save_users_to_db(user_t* user, int number_of_users){
     fprintf(fp, "%s %s\n",
             user[i].username,
             user[i].password);
-      
   }
-  
-  
   fclose (fp);
 }
+
+int load_users_from_file(user_t* user){
+  int data_counter;
+  data_counter = 0;
+  FILE *input = fopen(DB_NAME, "r");
+  while(fscanf(input, "%s %s", 
+               (user+data_counter)->username,
+               (user+data_counter)->password) != EOF){
+               data_counter++;
+    printf("%i loaded users\n", data_counter);
+  }
+  fclose(input);
+  return data_counter;
+}
+
  
  
