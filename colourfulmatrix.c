@@ -30,7 +30,7 @@ user_t user[100];
 int number_of_users = 0;
 
 void user_login(user_t* user, int number_of_users);
-void create_user(user_t user[number_of_users]);
+void create_user(user_t* user, int number_of_users);
 float* create_matrix(int * cols1, int* rows1);                    /* Creates a matrix */
 int deleteMatrix(float * mtx);                                    /* Frees memory     */
 void print_menu (void);                                           /* Print menu       */
@@ -70,7 +70,7 @@ while(logged_in == 0){
   if(chosen_user_option == 1 ||
      chosen_user_option == 2){
     if(chosen_user_option == 1){
-      create_user(&user[number_of_users]);
+      create_user(user, number_of_users);
       save_users_to_db(user, number_of_users);
       number_of_users++;
     }
@@ -147,9 +147,9 @@ int deleteMatrix(float * mtx) {
 
 int printMatrix(float * our_matrix, int * rows1, int * cols1) {
   int counter = 0;
-  int row, col;
-  for (row = 1; row <= *rows1; row++) {
-    for (col = 1; col <= *cols1; col++) {
+  int row = 0, col = 0;
+  for (col = 1; col <= *cols1; col++) {
+    for (row = 1; row <= *rows1; row++) {
       counter++;
       if(counter == 1 || counter % 8 == 1)                              /* This bit sets the colour of the printer */
           printf(KRED);
@@ -168,7 +168,7 @@ int printMatrix(float * our_matrix, int * rows1, int * cols1) {
       else if(counter == 8 || counter % 8 == 0)
           printf(KNRM);
       
-          printf(" %2.f ", *our_matrix+(row-1)+(col-1));                /* This line prints the corresponding row+col of the nested loop */
+          printf(" %2.f ", *our_matrix+(col-1)+(row-1));                /* This line prints the corresponding row+col of the nested loop */
     }
     /* separate rows by newlines */
     printf("\n");
@@ -218,19 +218,29 @@ float* create_matrix(int * cols1, int* rows1){
 
 
 
-void create_user(user_t user[number_of_users]){
+void create_user(user_t* user, int number_of_users){
   char dont_print[20];
   char do_print[20];
+  char temp_username[50];
+  
   strcpy(dont_print, "stty -echo");
   strcpy(do_print, "stty echo");
   
+  
+  
+  
   printf("Enter a username>\n");
   fgetc(stdin);
-  scanf("%s", user->username);
+  scanf("%s", temp_username);
+  
+  
+  strcpy((user+number_of_users)->username, temp_username);
+  
   printf("Enter a password\n");
   system(dont_print);
-  scanf("%s", user->password);
+  scanf("%s", (user+number_of_users)->password);
   system(do_print);
+  
 }
   
 
