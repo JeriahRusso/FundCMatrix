@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "accounts.h"
 
 /* The macros define the colour palette variables for background and font colour */
 
@@ -19,25 +20,14 @@
 
 
 
-struct user {
-  char username[50];
-  char password[50];
-}; 
-typedef struct user user_t;
-
 user_t user[100];
 
 int number_of_users = 0;
 
-void user_login(user_t* user, int number_of_users);
-void create_user(user_t* user, int number_of_users);
 float* create_matrix(int * cols1, int* rows1);                    /* Creates a matrix */
 int deleteMatrix(float * mtx);                                    /* Frees memory     */
 void print_menu (void);                                           /* Print menu       */
-void user_menu(void); 
 int printMatrix(float * our_matrix, int* rows1, int* cols1);      /* Print matrix     */
-void save_users_to_db(user_t* user, int number_of_users);
-int load_users_from_file(user_t* user);
   
 /* MAIN -----------------------------------------------------------------------------------------------------------------------------|
  *                                                                                                                                   |    
@@ -114,14 +104,6 @@ return 0;
 /* FUNCTIONS ---------------------------------------------------------------------------------------------------------------------------|
  *                                                                                                                                      |
  */
-
-void user_menu (void)
-{
-  printf("\n"
-           "1. Create new user\n"
-           "2. Login\n"
-           "Enter choice>\n");
-}
 
 void print_menu (void)
 {
@@ -218,100 +200,3 @@ float* create_matrix(int * cols1, int* rows1){
 
 
 
-void create_user(user_t* user, int number_of_users){
-  char dont_print[20];
-  char do_print[20];
-  char temp_username[50];
-  
-  strcpy(dont_print, "stty -echo");
-  strcpy(do_print, "stty echo");
-  
-  
-  
-  
-  printf("Enter a username>\n");
-  fgetc(stdin);
-  scanf("%s", temp_username);
-  
-  
-  strcpy((user+number_of_users)->username, temp_username);
-  
-  printf("Enter a password\n");
-  system(dont_print);
-  scanf("%s", (user+number_of_users)->password);
-  system(do_print);
-  
-}
-  
-
-
-void user_login(user_t* user, int number_of_users){
-  char dont_print[20];
-  char do_print[20];
-  char username_input[50];
-  char password_input[50];
-  int i, username_not_matched = 1, password_not_matched = 1;
-  strcpy(dont_print, "stty -echo");
-  strcpy(do_print, "stty echo");
-  
-  while(username_not_matched == 1){
-    
-    printf("Enter your username:\n");
-    scanf("%s", username_input);
-    
-    for(i = 0; i < number_of_users; i++){
-      if(!strcmp(username_input, user[i].username)){
-        username_not_matched = 0;
-      } 
-    } 
-  }
-  
-  printf("Username matched\n");
-  
-  while(password_not_matched == 1){
-    printf("Enter your password:\n");
-    
-    system(dont_print);
-    fgetc(stdin);
-    scanf("%s", password_input);
-    system(do_print);
-    
-    for(i = 0; i < number_of_users; i++){
-      if(!strcmp(password_input, user[i].password)){
-        password_not_matched = 0;
-              } 
-    }
-  }
-}
-
-
-void save_users_to_db(user_t* user, int number_of_users){
-  FILE* fp;
-  int i;
-  
-  fp = fopen(DB_NAME, "w");
-  
-  for(i = 0; i <= number_of_users; i++){
-    fprintf(fp, "%s %s\n",
-            user[i].username,
-            user[i].password);
-  }
-  fclose (fp);
-}
-
-int load_users_from_file(user_t* user){
-  int data_counter;
-  data_counter = 0;
-  FILE *input = fopen(DB_NAME, "r");
-  while(fscanf(input, "%s %s", 
-               (user+data_counter)->username,
-               (user+data_counter)->password) != EOF){
-               data_counter++;
-    printf("%i loaded users\n", data_counter);
-  }
-  fclose(input);
-  return data_counter;
-}
-
- 
- 
