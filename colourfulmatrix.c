@@ -3,32 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include "accounts.h"
-
-/* The macros define the colour palette variables for background and font colour */
-
-#define assert(ignore) ((void)0)
-#define KNRM  "\x1B[0m"
-#define KRED  "\x1B[37;41m"
-#define KGRN  "\x1B[37;42m"
-#define KYEL  "\x1B[37;43m"
-#define KBLU  "\x1B[37;44m"
-#define KMAG  "\x1B[37;45m"
-#define KCYN  "\x1B[37;46m" 
-#define KWHT  "\x1B[30;47m"
-#define DB_NAME "db.txt"
-
+#include "ColourMatrix.h"
 
 
 
 user_t user[100];
-
 int number_of_users = 0;
-
-float* create_matrix(int * cols1, int* rows1);                    /* Creates a matrix */
-int deleteMatrix(float * mtx);                                    /* Frees memory     */
 void print_menu (void);                                           /* Print menu       */
-int printMatrix(float * our_matrix, int* rows1, int* cols1);      /* Print matrix     */
-  
+
 /* MAIN -----------------------------------------------------------------------------------------------------------------------------|
  *                                                                                                                                   |    
  */
@@ -117,48 +99,6 @@ void print_menu (void)
 }
 
 
-
-int deleteMatrix(float * mtx) {
-  if (!mtx) return -1;
-  /* free mtx's data */
-  assert (mtx);
-  free(mtx);
-  mtx = NULL;
-  return 0;
-}
-
-int printMatrix(float * our_matrix, int * rows1, int * cols1) {
-  int counter = 0;
-  int row = 0, col = 0;
-  for (col = 1; col <= *cols1; col++) {
-    for (row = 1; row <= *rows1; row++) {
-      counter++;
-      if(counter == 1 || counter % 8 == 1)                              /* This bit sets the colour of the printer */
-          printf(KRED);
-      else if(counter == 2 || counter % 8 == 2) 
-          printf(KGRN);
-      else if(counter == 3 || counter % 8 == 3)
-          printf(KYEL);
-      else if(counter == 4 || counter % 8 == 4)
-          printf(KBLU);
-      else if(counter == 5 || counter % 8 == 5)
-          printf(KMAG);
-      else if(counter == 6 || counter % 8 == 6)
-          printf(KCYN);
-      else if(counter == 7 || counter % 8 == 7)
-          printf(KWHT);
-      else if(counter == 8 || counter % 8 == 0)
-          printf(KNRM);
-      
-          printf(" %2.f ", *our_matrix+(col-1)+(row-1));                /* This line prints the corresponding row+col of the nested loop */
-    }
-    /* separate rows by newlines */
-    printf("\n");
-  }
-  printf(KNRM);                                                         /* Set colour back to normal */
-  return 0;
-}
-
 /*
 
 float mean(float *ptr, int length){
@@ -178,24 +118,6 @@ float mean(float *ptr, int length){
 
  */
 
-float* create_matrix(int * cols1, int* rows1){
-  
-  int rows, cols;
-  
-  printf("Enter the number of rows>\n");
-  scanf("%d", &rows);
-  
-  printf("Enter the number of cols>\n");
-  scanf("%d", &cols);
-  
-  float * our_matrix = (float *) malloc(rows * cols * sizeof(float));
-  
-  *cols1 = cols;
-  *rows1 = rows;
-  
-  return our_matrix;
-    
-}
 
 
 
