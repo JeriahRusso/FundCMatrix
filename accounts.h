@@ -1,6 +1,6 @@
 
 /*
- *      account.h
+ *      accounts.h
  * 
  *      User account management header file for:
  *      Fundamentals of Programming with C Assignment 3 - Group Assignment

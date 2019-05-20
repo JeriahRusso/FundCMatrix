@@ -28,17 +28,17 @@
  * 
  * rows1 and cols1 are int* values that get updated and are used by other functions such as printMatrix
  */ 
-float* create_matrix(int * cols1, int* rows1);                    
+extern float* create_matrix(int * cols1, int* rows1);                    
 
 /* Frees any allocated memory for the supplied matrix */
-int deleteMatrix(float * mtx);
+extern int deleteMatrix(float * mtx);
 
 /* Uses a nested loop to cycle through each row and column, printing each value as it goes
  * 
  * Before landing on the value it is about to print, this function changes the background colour and font colour (there are 8 colour combinations
  * that it cycles through)
  */ 
-int printMatrix(float * our_matrix, int* rows1, int* cols1);   
+extern int printMatrix(float * our_matrix, int* rows1, int* cols1);   
 
 
 

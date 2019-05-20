@@ -5,8 +5,8 @@ Matrix Manipulation Program
 colourfulmatrix.c
 
 <b>User Defined Headerfiles:</b><br> 
-accounts.c (looks after user account management) and<br> 
-ColourMatrix.c (matrix functions for creation, manipulation, display and delete)
+accounts.h (looks after user account management) and<br> 
+ColourMatrix.h (matrix functions for creation, manipulation, display and delete)
 
 <b>Compiles with:</b><br>
 gcc -Wall -Werror -ansi -o matrix.o colourfulmatrix.c accounts.c ColourMatrix.c -lm
