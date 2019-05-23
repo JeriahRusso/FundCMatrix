@@ -67,6 +67,7 @@ int printMatrix(float * our_matrix, int * rows1, int * cols1) {
       printf(" %2.f ", *our_matrix+(col-1)+(row-1));                /* This line prints the corresponding row+col of the nested loop */
     }
     /* separate rows by newlines */
+    printf(KNRM); 
     printf("\n");
   }
   printf(KNRM);                                                         /* Set colour back to normal */
