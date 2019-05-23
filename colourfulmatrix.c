@@ -12,9 +12,10 @@ int number_of_users = 0;
 void print_menu (void);                                           /* Print menu       */
 
 /* MAIN -----------------------------------------------------------------------------------------------------------------------------|
- *                                                                                                                                   |    
+ *                                                                                                                                   |
  */
-  
+
+/* TODO:  When creating a new matrix allocate the memory here */
 
 int main(){
   printf(KNRM);                                                   /* Set colour palette to normal */
@@ -27,18 +28,18 @@ int main(){
   int* rows1 = &rows_example;                                     /* Pointer to rows              */
   int* cols1 = &cols_example;                                     /* Pointer to cols              */
   user_t user[100];
-  int logged_in = 0;               
-  
+  int logged_in = 0;
+
   number_of_users = load_users_from_file(user);
 
-  
-while(logged_in == 0){   
-  
+
+while(logged_in == 0){
+
   user_menu();
-  
+
   scanf("%s", chosen_user_option_char);
   chosen_user_option = atoi(&chosen_user_option_char[0]);
-  
+
   if(chosen_user_option == 1 ||
      chosen_user_option == 2){
     if(chosen_user_option == 1){
@@ -54,10 +55,10 @@ while(logged_in == 0){
 }
 
 printf("Login Successful\n");
-  
+
   while(1){
-  print_menu();                                                   
-  
+  print_menu();
+
   scanf("%s", chosen_option_char);
   chosen_option = atoi(&chosen_option_char[0]);
   if(chosen_option == 1 ||
@@ -82,7 +83,7 @@ printf("Login Successful\n");
 }
 return 0;
 }
-  
+
 /* FUNCTIONS ---------------------------------------------------------------------------------------------------------------------------|
  *                                                                                                                                      |
  */
@@ -104,21 +105,16 @@ void print_menu (void)
 float mean(float *ptr, int length){
   float sum, mean;
   int i;
-  
+
   for(i = 0; i < length; i++){
     sum = sum + ptr[i];
   }
-  
+
   mean = sum / (i + 1);
-  
+
   printf("The mean is %.2lf", mean);
-  
-  return mean;  
+
+  return mean;
 }
 
  */
-
-
-
-
-

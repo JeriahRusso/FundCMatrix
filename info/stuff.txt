@@ -1,0 +1,4 @@
+XOR cipher
+Or substituion cipher
+
+Runlength encoding
