@@ -51,4 +51,7 @@ extern int deleteMatrix(float * mtx);
  * Before landing on the value it is about to print, this function changes the background colour and font colour (there are 8 colour combinations
  * that it cycles through)
  */
-extern int printMatrix(matrix_t * our_matrix, int matrix_index);
+extern int printMatrix(matrix_t* our_matrix, int index);
+
+
+int setValues(matrix_t* our_matrix, int matrix_index);

@@ -74,6 +74,11 @@ printf("Login Successful\n");
       scanf("%d", &matrix_index);
       printMatrix(matrix, matrix_index);
     }
+    else if(chosen_option == 3){
+      printf("Which matrix would you like to set the values for? Enter a number>\n");
+      scanf("%d", &matrix_index);
+      setValues(matrix, matrix_index);
+    }
     else if(chosen_option == 5){
       int i;
       for(i = 0; i < number_of_matrices; i++){
@@ -99,7 +104,7 @@ void print_menu (void)
   printf("\n"
            "1. add a matrix\n"
            "2. print a matrix\n"
-           "3. save matrix\n"
+           "3. set values of matrix\n"
            "4. load matrix\n"
            "5. exit the program\n"
            "Enter choice (number between 1-5)>\n");

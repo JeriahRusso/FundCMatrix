@@ -41,11 +41,11 @@ int deleteMatrix(float * mtx) {
  * Before landing on the value it is about to print, this function changes the background colour and font colour (there are 8 colour combinations
  * that it cycles through)
  */
-int printMatrix(matrix_t* our_matrix, int matrix_index) {
+int printMatrix(matrix_t* our_matrix, int index) {
   int counter = 0;
   int row = 0, col = 0;
-  for (col = 1; col <= our_matrix[matrix_index].columns; col++) {
-    for (row = 1; row <= our_matrix[matrix_index].rows; row++) {
+  for (col = 1; col <= our_matrix->columns; col++) {
+    for (row = 1; row <= our_matrix->rows; row++) {
       counter++;
       if(counter == 1 || counter % 8 == 1)                              /* This bit sets the colour of the printer */
   printf(KRED);
@@ -64,7 +64,7 @@ int printMatrix(matrix_t* our_matrix, int matrix_index) {
       else if(counter == 8 || counter % 8 == 0)
         printf(KNRM);
 
-      printf(" %2.f ", *our_matrix[matrix_index].data+(col-1)+(row-1));                /* This line prints the corresponding row+col of the nested loop */
+      printf(" %2.f ", *our_matrix[index].data+(col-1)+(row-1));                /* This line prints the corresponding row+col of the nested loop */
     }
     /* separate rows by newlines */
     printf(KNRM); 
@@ -128,3 +128,20 @@ int create_matrix(matrix_t* matrixP, int matrixLocation){
   return 0;
 
 }
+
+
+int setValues(matrix_t* our_matrix, int matrix_index) {
+  int counter = 0;
+  int row = 0, col = 0;
+  for (col = 1; col <= our_matrix[matrix_index].columns; col++) {
+    for (row = 1; row <= our_matrix[matrix_index].rows; row++) {
+      counter++;
+      
+      printf("Enter the value for column number %d of row number %d>\n", col, row);
+      scanf("%f", our_matrix[matrix_index].data+(col-1)+(row-1));                
+    }
+    /* separate rows by newlines */
+  }
+    return 0;
+}
+
