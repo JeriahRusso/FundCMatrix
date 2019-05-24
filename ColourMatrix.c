@@ -170,7 +170,7 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int nu
       return 0;
     }
   }
-  printf("Matrices are not of equal size - multiplication is not possible.\n");
+  printf("Matrices are not of equal size - addition is not possible.\n");
   return 0;
 }
 
@@ -195,7 +195,7 @@ int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, i
       return 0;
     }
   }
-  printf("Matrices are not of equal size - multiplication is not possible.\n");
+  printf("Matrices are not of equal size - subtraction is not possible.\n");
   return 0;
 }
 
