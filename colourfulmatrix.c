@@ -75,7 +75,10 @@ printf("Login Successful\n");
       printMatrix(matrix, matrix_index);
     }
     else if(chosen_option == 5){
-      free(matrix);
+      int i;
+      for(i = 0; i < number_of_matrices; i++){
+        free(matrix[i].data);
+      }
         /* deleteMatrix(new_matrix); */
         return 0;
       }
