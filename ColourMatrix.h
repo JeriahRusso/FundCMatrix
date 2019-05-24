@@ -17,20 +17,20 @@
 #define KMAG  "\x1B[37;45m"
 #define KCYN  "\x1B[37;46m"
 #define KWHT  "\x1B[30;47m"
-#define MAX_MATRICIES 100
+#define MAX_MATRICES 100
 
 /* Name of the db file */
 #define DB_NAME "db.txt"
 
 struct matrix{
-    char* matrixName;
+    char matrixName[50];
     int rows;
     int columns;
     float* data;
 };
 typedef struct matrix matrix_t;
 
-matrix_t matricies[MAX_MATRICIES];
+matrix_t matrices[MAX_MATRICES];
 
 /* Creates a matrix by returning a 2d array of the dimensions matrix[rows1][cols1]
  *
@@ -38,7 +38,10 @@ matrix_t matricies[MAX_MATRICIES];
  *
  * rows1 and cols1 are int* values that get updated and are used by other functions such as printMatrix
  */
-extern float* create_matrix(int * cols1, int* rows);
+
+extern int create_matrix(matrix_t* matrixP, int matrixLocation);
+ 
+ /*extern float* create_matrix(int * cols1, int* rows);*/
 
 /* Frees any allocated memory for the supplied matrix */
 extern int deleteMatrix(float * mtx);
@@ -48,4 +51,4 @@ extern int deleteMatrix(float * mtx);
  * Before landing on the value it is about to print, this function changes the background colour and font colour (there are 8 colour combinations
  * that it cycles through)
  */
-extern int printMatrix(float * our_matrix, int* rows1, int* cols1);
+extern int printMatrix(matrix_t * our_matrix, int matrix_index);

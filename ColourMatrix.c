@@ -41,11 +41,11 @@ int deleteMatrix(float * mtx) {
  * Before landing on the value it is about to print, this function changes the background colour and font colour (there are 8 colour combinations
  * that it cycles through)
  */
-int printMatrix(float * our_matrix, int * rows1, int * cols1) {
+int printMatrix(matrix_t* our_matrix, int matrix_index) {
   int counter = 0;
   int row = 0, col = 0;
-  for (col = 1; col <= *cols1; col++) {
-    for (row = 1; row <= *rows1; row++) {
+  for (col = 1; col <= our_matrix[matrix_index].columns; col++) {
+    for (row = 1; row <= our_matrix[matrix_index].rows; row++) {
       counter++;
       if(counter == 1 || counter % 8 == 1)                              /* This bit sets the colour of the printer */
   printf(KRED);
@@ -64,7 +64,7 @@ int printMatrix(float * our_matrix, int * rows1, int * cols1) {
       else if(counter == 8 || counter % 8 == 0)
         printf(KNRM);
 
-      printf(" %2.f ", *our_matrix+(col-1)+(row-1));                /* This line prints the corresponding row+col of the nested loop */
+      printf(" %2.f ", *our_matrix[matrix_index].data+(col-1)+(row-1));                /* This line prints the corresponding row+col of the nested loop */
     }
     /* separate rows by newlines */
     printf(KNRM); 
@@ -80,6 +80,8 @@ int printMatrix(float * our_matrix, int * rows1, int * cols1) {
  *
  * rows1 and cols1 are int* values that get updated and are used by other functions such as printMatrix
  */
+
+/*
 
 float* create_matrix(int * cols1, int* rows1){
   int rows, cols;
@@ -98,25 +100,31 @@ float* create_matrix(int * cols1, int* rows1){
   return our_matrix;
 
 }
+ 
+*/ 
 
-/*int create_matrix(matrix_t* matrixP, int matrixLocation){
+int create_matrix(matrix_t* matrixP, int matrixLocation){
 
-  char* matrixName;
+  char tempName[50];
   int rows, cols;
-
+  
+  
   printf("Enter a name for your matrix>\n");
-  scanf("%s", &matrixName);
+  scanf("%s", tempName);
 
   printf("Enter the number of rows>\n");
   scanf("%d", &rows);
 
   printf("Enter the number of cols>\n");
   scanf("%d", &cols);
+  
+  float * our_matrix = (float *) malloc(rows * cols * sizeof(float));  
 
-  matrixP[matrixLocation].matrixName = matrixName;
+  strcpy(matrixP[matrixLocation].matrixName, tempName);
   matrixP[matrixLocation].rows = rows;
   matrixP[matrixLocation].columns = cols;
+  matrixP[matrixLocation].data = our_matrix;
 
   return 0;
 
-}*/
+}

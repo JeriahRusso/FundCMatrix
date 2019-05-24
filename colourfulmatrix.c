@@ -8,6 +8,7 @@
 
 
 user_t user[100];
+matrix_t matrix[100];
 int number_of_users = 0;
 void print_menu (void);                                           /* Print menu       */
 
@@ -19,16 +20,14 @@ void print_menu (void);                                           /* Print menu 
 
 int main(){
   printf(KNRM);                                                   /* Set colour palette to normal */
-  float* new_matrix;                                              /* Initialise a matrix object   */
+                                                                  /* Initialise a matrix object   */
 
   char chosen_option_char[10], chosen_user_option_char[10];       /* Read string, store in here   */
   int chosen_option, chosen_user_option;                          /* Convert string to int        */
-  int rows_example = 0;                                           /* Main func rows variable      */
-  int cols_example = 0;                                           /* Main func cols variable      */
-  int* rows1 = &rows_example;                                     /* Pointer to rows              */
-  int* cols1 = &cols_example;                                     /* Pointer to cols              */
   user_t user[100];
   int logged_in = 0;
+  int number_of_matrices = 0;
+  int matrix_index = 0;
 
   number_of_users = load_users_from_file(user);
 
@@ -67,13 +66,17 @@ printf("Login Successful\n");
      chosen_option == 4 ||
      chosen_option == 5 ){
     if(chosen_option == 1){
-      new_matrix = create_matrix(rows1, cols1);
+      create_matrix(matrix, number_of_matrices);
+      number_of_matrices++;
     }
     else if(chosen_option == 2){
-      printMatrix(new_matrix, rows1, cols1);
+      printf("Which matrix would you like to print? Enter a number>\n");
+      scanf("%d", &matrix_index);
+      printMatrix(matrix, matrix_index);
     }
     else if(chosen_option == 5){
-         deleteMatrix(new_matrix);
+      free(matrix);
+        /* deleteMatrix(new_matrix); */
         return 0;
       }
     else{
