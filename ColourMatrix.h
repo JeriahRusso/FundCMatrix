@@ -55,3 +55,7 @@ extern int printMatrix(matrix_t* our_matrix, int index);
 
 
 int setValues(matrix_t* our_matrix, int matrix_index);
+
+int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int number_of_matrices);
+
+int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int number_of_matrices);

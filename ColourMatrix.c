@@ -149,3 +149,53 @@ int setValues(matrix_t* our_matrix, int matrix_index) {
     return 0;
 }
 
+int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int number_of_matrices){
+  if(our_matrix[matrix_index1].columns == our_matrix[matrix_index2].columns){
+    if(our_matrix[matrix_index1].rows == our_matrix[matrix_index2].rows){
+      our_matrix[number_of_matrices].rows = our_matrix[matrix_index2].rows;
+      our_matrix[number_of_matrices].columns = our_matrix[matrix_index2].columns;
+      int max_col = our_matrix[matrix_index1].columns;
+      float *data = our_matrix[matrix_index1].data;
+      float *data1 = our_matrix[matrix_index1].data;
+      float *data2 = our_matrix[matrix_index2].data;
+      
+      int col, row;
+      for(col = 1; col <= our_matrix[matrix_index2].columns; col++){
+        for(row = 1; row <= our_matrix[matrix_index2].rows; row++){
+        data[(col-1) + (row-1) * max_col] =
+          (data1[(col-1) + (row-1) * (max_col)]) + (data2[(col-1) + (row-1) * (max_col)]);  
+        }
+      }
+    our_matrix[number_of_matrices].data = data;
+      return 0;
+    }
+  }
+  printf("Matrices are not of equal size - multiplication is not possible.\n");
+  return 0;
+}
+
+int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int number_of_matrices){
+  if(our_matrix[matrix_index1].columns == our_matrix[matrix_index2].columns){
+    if(our_matrix[matrix_index1].rows == our_matrix[matrix_index2].rows){
+      our_matrix[number_of_matrices].rows = our_matrix[matrix_index2].rows;
+      our_matrix[number_of_matrices].columns = our_matrix[matrix_index2].columns;
+      int max_col = our_matrix[matrix_index1].columns;
+      float *data = our_matrix[matrix_index1].data;
+      float *data1 = our_matrix[matrix_index1].data;
+      float *data2 = our_matrix[matrix_index2].data;
+      
+      int col, row;
+      for(col = 1; col <= our_matrix[matrix_index2].columns; col++){
+        for(row = 1; row <= our_matrix[matrix_index2].rows; row++){
+          data[(col-1) + (row-1) * max_col] =
+            (data1[(col-1) + (row-1) * (max_col)]) - (data2[(col-1) + (row-1) * (max_col)]);  
+        }
+      }
+      our_matrix[number_of_matrices].data = data;
+      return 0;
+    }
+  }
+  printf("Matrices are not of equal size - multiplication is not possible.\n");
+  return 0;
+}
+

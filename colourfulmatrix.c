@@ -28,6 +28,8 @@ int main(){
   int logged_in = 0;
   int number_of_matrices = 0;
   int matrix_index = 0;
+  int matrix_index1 = 0;
+  int matrix_index2 = 0;
 
   number_of_users = load_users_from_file(user);
 
@@ -64,7 +66,8 @@ printf("Login Successful\n");
      chosen_option == 2 ||
      chosen_option == 3 ||
      chosen_option == 4 ||
-     chosen_option == 5 ){
+     chosen_option == 5 ||
+     chosen_option == 6 ){
     if(chosen_option == 1){
       create_matrix(matrix, number_of_matrices);
       number_of_matrices++;
@@ -79,7 +82,23 @@ printf("Login Successful\n");
       scanf("%d", &matrix_index);
       setValues(matrix, matrix_index);
     }
+    else if(chosen_option == 4){
+      printf("Enter the index of the first matrix you want to add.\n");
+      scanf("%d", &matrix_index1);
+      printf("Enter the index of the second matrix you want to add.\n");
+      scanf("%d", &matrix_index2);
+      addMatrix(matrix, matrix_index1, matrix_index2, number_of_matrices);
+      number_of_matrices++;
+    }
     else if(chosen_option == 5){
+      printf("Enter the index of the first matrix you want to subtract.\n");
+      scanf("%d", &matrix_index1);
+      printf("Enter the index of the second matrix you want to subtract.\n");
+      scanf("%d", &matrix_index2);
+      subtractMatrix(matrix, matrix_index1, matrix_index2, number_of_matrices);
+      number_of_matrices++;
+    }
+    else if(chosen_option == 6){
       int i;
       for(i = 0; i < number_of_matrices; i++){
         free(matrix[i].data);
@@ -105,8 +124,9 @@ void print_menu (void)
            "1. add a matrix\n"
            "2. print a matrix\n"
            "3. set values of matrix\n"
-           "4. load matrix\n"
-           "5. exit the program\n"
+           "4. add matrices\n"
+           "5. subtract matrices\n"
+           "6. exit the program\n"
            "Enter choice (number between 1-5)>\n");
 }
 
