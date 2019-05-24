@@ -42,13 +42,15 @@ int deleteMatrix(float * mtx) {
  * that it cycles through)
  */
 int printMatrix(matrix_t* our_matrix, int index) {
+  int max_col = our_matrix[index].columns;
+  float *data = our_matrix[index].data;
   int counter = 0;
   int row = 0, col = 0;
-  for (col = 1; col <= our_matrix->columns; col++) {
-    for (row = 1; row <= our_matrix->rows; row++) {
+  for (col = 1; col <= our_matrix[index].columns; col++) {
+    for (row = 1; row <= our_matrix[index].rows; row++) {
       counter++;
       if(counter == 1 || counter % 8 == 1)                              /* This bit sets the colour of the printer */
-  printf(KRED);
+        printf(KRED);
       else if(counter == 2 || counter % 8 == 2)
         printf(KGRN);
       else if(counter == 3 || counter % 8 == 3)
@@ -64,7 +66,8 @@ int printMatrix(matrix_t* our_matrix, int index) {
       else if(counter == 8 || counter % 8 == 0)
         printf(KNRM);
 
-      printf(" %2.f ", *our_matrix[index].data+(col-1)+(row-1));                /* This line prints the corresponding row+col of the nested loop */
+    /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */      /* This line prints the corresponding row+col of the nested loop */
+      printf(" %2.f ", data[(col-1) + (row-1) * max_col]);
     }
     /* separate rows by newlines */
     printf(KNRM); 
@@ -131,17 +134,18 @@ int create_matrix(matrix_t* matrixP, int matrixLocation){
 
 
 int setValues(matrix_t* our_matrix, int matrix_index) {
-  int counter = 0;
+  int max_col = our_matrix[matrix_index].columns;
+  float *data = our_matrix[matrix_index].data;
   int row = 0, col = 0;
   for (col = 1; col <= our_matrix[matrix_index].columns; col++) {
     for (row = 1; row <= our_matrix[matrix_index].rows; row++) {
-      counter++;
       
       printf("Enter the value for column number %d of row number %d>\n", col, row);
-      scanf("%f", our_matrix[matrix_index].data+(col-1)+(row-1));                
+      scanf("%f", data + (col-1) + (row-1) * max_col);
     }
     /* separate rows by newlines */
   }
+  our_matrix[matrix_index].data = data;
     return 0;
 }
 
