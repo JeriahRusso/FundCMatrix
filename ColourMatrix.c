@@ -46,8 +46,8 @@ int printMatrix(matrix_t* our_matrix, int index) {
   float *data = our_matrix[index].data;
   int counter = 0;
   int row = 0, col = 0;
-  for (col = 1; col <= our_matrix[index].columns; col++) {
-    for (row = 1; row <= our_matrix[index].rows; row++) {
+  for (row = 1; row <= our_matrix[index].rows; row++) {
+    for (col = 1; col <= our_matrix[index].columns; col++) {
       counter++;
       if(counter == 1 || counter % 8 == 1)                              /* This bit sets the colour of the printer */
         printf(KRED);
@@ -67,7 +67,7 @@ int printMatrix(matrix_t* our_matrix, int index) {
         printf(KNRM);
 
     /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */      /* This line prints the corresponding row+col of the nested loop */
-      printf(" %2.f ", data[(col-1) + (row-1) * max_col]);
+      printf(" %2.f ", data[(row-1) + (col-1) * max_col]);
     }
     /* separate rows by newlines */
     printf(KNRM); 
@@ -137,11 +137,11 @@ int setValues(matrix_t* our_matrix, int matrix_index) {
   int max_col = our_matrix[matrix_index].columns;
   float *data = our_matrix[matrix_index].data;
   int row = 0, col = 0;
-  for (col = 1; col <= our_matrix[matrix_index].columns; col++) {
-    for (row = 1; row <= our_matrix[matrix_index].rows; row++) {
+  for (row = 1; row <= our_matrix[matrix_index].rows; row++) {
+    for (col = 1; col <= our_matrix[matrix_index].columns; col++) {
       
       printf("Enter the value for column number %d of row number %d>\n", col, row);
-      scanf("%f", data + (col-1) + (row-1) * max_col);
+      scanf("%f", data + (row-1) + (col-1) * max_col);
     }
     /* separate rows by newlines */
   }
@@ -155,15 +155,15 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int nu
       our_matrix[number_of_matrices].rows = our_matrix[matrix_index2].rows;
       our_matrix[number_of_matrices].columns = our_matrix[matrix_index2].columns;
       int max_col = our_matrix[matrix_index1].columns;
-      float *data = our_matrix[matrix_index1].data;
+      float * data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index1].columns * sizeof(float)); 
       float *data1 = our_matrix[matrix_index1].data;
       float *data2 = our_matrix[matrix_index2].data;
       
       int col, row;
-      for(col = 1; col <= our_matrix[matrix_index2].columns; col++){
-        for(row = 1; row <= our_matrix[matrix_index2].rows; row++){
-        data[(col-1) + (row-1) * max_col] =
-          (data1[(col-1) + (row-1) * (max_col)]) + (data2[(col-1) + (row-1) * (max_col)]);  
+      for(row = 1; row <= our_matrix[matrix_index2].rows; row++){
+        for(col = 1; col <= our_matrix[matrix_index2].columns; col++){
+        data[(row-1) + (col-1) * max_col] =
+          (data1[(row-1) + (col-1) * (max_col)]) + (data2[(row-1) + (col-1) * (max_col)]);  
         }
       }
     our_matrix[number_of_matrices].data = data;
@@ -180,7 +180,7 @@ int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, i
       our_matrix[number_of_matrices].rows = our_matrix[matrix_index2].rows;
       our_matrix[number_of_matrices].columns = our_matrix[matrix_index2].columns;
       int max_col = our_matrix[matrix_index1].columns;
-      float *data = our_matrix[matrix_index1].data;
+      float * data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index1].columns * sizeof(float));
       float *data1 = our_matrix[matrix_index1].data;
       float *data2 = our_matrix[matrix_index2].data;
       

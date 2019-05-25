@@ -12,7 +12,7 @@ matrix_t matrix[100];
 int number_of_users = 0;
 void print_menu (void);                                           /* Print menu       */
 
-/* MAIN -----------------------------------------------------------------------------------------------------------------------------|
+/* MAIN --------------------------------------------------------------------------------------------|
  *                                                                                                                                   |
  */
 
@@ -102,7 +102,7 @@ printf("Login Successful\n");
       int i;
       for(i = 0; i < number_of_matrices; i++){
         free(matrix[i].data);
-      }
+      } 
         /* deleteMatrix(new_matrix); */
         return 0;
       }
