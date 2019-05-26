@@ -8,26 +8,23 @@
 
 
 user_t user[100];
-matrix_t matrix[100];
-int number_of_users = 0;
-void print_menu (void);                                           /* Print menu       */
+matrix_t matrix[100];                                             /* Initialise a matrix array of structures */
+void print_menu (void);                                           /* Print menu                   */
 
 /* MAIN --------------------------------------------------------------------------------------------|
- *                                                                                                                                   |
+ *                                                                                                                                   
  */
 
 /* TODO:  When creating a new matrix allocate the memory here */
 
 int main(){
   printf(KNRM);                                                   /* Set colour palette to normal */
-                                                                  /* Initialise a matrix object   */
-
+  int number_of_users = 0;
   char chosen_option_char[10], chosen_user_option_char[10];       /* Read string, store in here   */
   int chosen_option, chosen_user_option;                          /* Convert string to int        */
   user_t user[100];
   int logged_in = 0;
   int number_of_matrices = 0;
-  int matrix_index = 0;
   int matrix_index1 = 0;
   int matrix_index2 = 0;
 
@@ -67,20 +64,17 @@ printf("Login Successful\n");
      chosen_option == 3 ||
      chosen_option == 4 ||
      chosen_option == 5 ||
-     chosen_option == 6 ){
+     chosen_option == 6 ||
+     chosen_option == 7){
     if(chosen_option == 1){
       create_matrix(matrix, number_of_matrices);
       number_of_matrices++;
     }
     else if(chosen_option == 2){
-      printf("Which matrix would you like to print? Enter a number>\n");
-      scanf("%d", &matrix_index);
-      printMatrix(matrix, matrix_index);
+      printMatrix(matrix, number_of_matrices);
     }
     else if(chosen_option == 3){
-      printf("Which matrix would you like to set the values for? Enter a number>\n");
-      scanf("%d", &matrix_index);
-      setValues(matrix, matrix_index);
+      setValues(matrix, number_of_matrices);
     }
     else if(chosen_option == 4){
       printf("Enter the index of the first matrix you want to add.\n");
@@ -99,6 +93,9 @@ printf("Login Successful\n");
       number_of_matrices++;
     }
     else if(chosen_option == 6){
+      showMatrixNames(matrix, number_of_matrices);
+    }
+    else if(chosen_option == 7){
       int i;
       for(i = 0; i < number_of_matrices; i++){
         free(matrix[i].data);
@@ -126,7 +123,8 @@ void print_menu (void)
            "3. set values of matrix\n"
            "4. add matrices\n"
            "5. subtract matrices\n"
-           "6. exit the program\n"
+           "6. show names of stored matrices\n"
+           "7. exit the program\n"
            "Enter choice (number between 1-5)>\n");
 }
 
