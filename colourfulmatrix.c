@@ -10,6 +10,7 @@
 user_t user[100];
 matrix_t matrix[100];                                             /* Initialise a matrix array of structures */
 void print_menu (void);                                           /* Print menu                   */
+char * scanline(char *dest, int dest_len);
 
 /* MAIN --------------------------------------------------------------------------------------------|
  *                                                                                                                                   
@@ -77,20 +78,26 @@ printf("Login Successful\n");
       setValues(matrix, number_of_matrices);
     }
     else if(chosen_option == 4){
+      int addMatrixSuccessful = 0;
       printf("Enter the index of the first matrix you want to add.\n");
       scanf("%d", &matrix_index1);
       printf("Enter the index of the second matrix you want to add.\n");
       scanf("%d", &matrix_index2);
-      addMatrix(matrix, matrix_index1, matrix_index2, number_of_matrices);
+      addMatrixSuccessful = addMatrix(matrix, matrix_index1, matrix_index2, number_of_matrices);
+      if(addMatrixSuccessful == 1){
       number_of_matrices++;
+      }
     }
     else if(chosen_option == 5){
+      int subMatrixSuccessful = 0;
       printf("Enter the index of the first matrix you want to subtract.\n");
       scanf("%d", &matrix_index1);
       printf("Enter the index of the second matrix you want to subtract.\n");
       scanf("%d", &matrix_index2);
-      subtractMatrix(matrix, matrix_index1, matrix_index2, number_of_matrices);
+      subMatrixSuccessful = subtractMatrix(matrix, matrix_index1, matrix_index2, number_of_matrices);
+      if(subMatrixSuccessful == 1){
       number_of_matrices++;
+      }
     }
     else if(chosen_option == 6){
       showMatrixNames(matrix, number_of_matrices);
@@ -147,3 +154,17 @@ float mean(float *ptr, int length){
 }
 
  */
+
+char * scanline(char *dest, int dest_len){
+  int i, ch;
+  i = 0;
+  for (ch = getchar();
+       ch != '\n' && ch != EOF && i < dest_len -1; ch = getchar())
+    dest[i++] = ch;
+  dest[i] = '\0';
+  
+  while (ch != '\n' && ch != EOF)
+    ch = getchar();
+  
+  return (dest);
+}
