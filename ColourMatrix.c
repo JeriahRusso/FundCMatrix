@@ -141,6 +141,14 @@ int create_matrix(matrix_t* matrixP, int matrixLocation){
   scanf("%d", &cols);
   
   float * our_matrix = (float *) malloc(rows * cols * sizeof(float));  
+  
+  int row = 0, col = 0;
+  for (row = 1; row <= rows; row++) {
+    for (col = 1; col <= cols; col++) {
+      
+      our_matrix[(row-1) + (col-1) * cols] = 0;
+    }
+  }
 
   strcpy(matrixP[matrixLocation].matrixName, tempName);
   matrixP[matrixLocation].rows = rows;
