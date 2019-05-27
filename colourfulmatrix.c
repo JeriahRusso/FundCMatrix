@@ -79,10 +79,14 @@ printf("Login Successful\n");
     }
     else if(chosen_option == 4){
       int addMatrixSuccessful = 0;
-      printf("Enter the index of the first matrix you want to add.\n");
+      showMatrixNames(matrix, number_of_matrices);
+      printf("From the matrices above, which matrix do you want to add to? Enter the matrix number>\n");
       scanf("%d", &matrix_index1);
-      printf("Enter the index of the second matrix you want to add.\n");
+      showMatrixNames(matrix, number_of_matrices);
+      printf("Which matrix would you like to add to Matrix %d? Enter the matrix number>\n", matrix_index1);
+      matrix_index1 -= 1;
       scanf("%d", &matrix_index2);
+      matrix_index2 -= 1;
       addMatrixSuccessful = addMatrix(matrix, matrix_index1, matrix_index2, number_of_matrices);
       if(addMatrixSuccessful == 1){
       number_of_matrices++;
@@ -90,10 +94,14 @@ printf("Login Successful\n");
     }
     else if(chosen_option == 5){
       int subMatrixSuccessful = 0;
-      printf("Enter the index of the first matrix you want to subtract.\n");
+      showMatrixNames(matrix, number_of_matrices);
+      printf("From the matrices above, which matrix do you want to subtract from? Enter the matrix number>\n");
       scanf("%d", &matrix_index1);
-      printf("Enter the index of the second matrix you want to subtract.\n");
+      showMatrixNames(matrix, number_of_matrices);
+      printf("Which matrix would you like to subtract from Matrix %d? Enter the matrix number>\n", matrix_index1);
+      matrix_index1 -= 1;
       scanf("%d", &matrix_index2);
+      matrix_index2 -= 1;
       subMatrixSuccessful = subtractMatrix(matrix, matrix_index1, matrix_index2, number_of_matrices);
       if(subMatrixSuccessful == 1){
       number_of_matrices++;
