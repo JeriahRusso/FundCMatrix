@@ -66,7 +66,8 @@ printf("Login Successful\n");
      chosen_option == 4 ||
      chosen_option == 5 ||
      chosen_option == 6 ||
-     chosen_option == 7){
+     chosen_option == 7 ||
+     chosen_option == 8){
     if(chosen_option == 1){
       create_matrix(matrix, number_of_matrices);
       number_of_matrices++;
@@ -111,6 +112,21 @@ printf("Login Successful\n");
       showMatrixNames(matrix, number_of_matrices);
     }
     else if(chosen_option == 7){
+      int dotProductSuccessful = 0;
+      showMatrixNames(matrix, number_of_matrices);
+      printf("From the matrices above, which matrix do you want to multiply by? Enter the matrix number>\n");
+      scanf("%d", &matrix_index1);
+      showMatrixNames(matrix, number_of_matrices);
+      printf("Which matrix would you like Matrix %d to multiply? Enter the matrix number>\n", matrix_index1);
+      matrix_index1 -= 1;
+      scanf("%d", &matrix_index2);
+      matrix_index2 -= 1;
+      dotProductSuccessful = dotProductMatrix(matrix, matrix_index1, matrix_index2, number_of_matrices);
+      if(dotProductSuccessful){
+        number_of_matrices++;
+      }
+    }
+    else if(chosen_option == 8){
       int i;
       for(i = 0; i < number_of_matrices; i++){
         free(matrix[i].data);
@@ -139,7 +155,8 @@ void print_menu (void)
            "4. add matrices\n"
            "5. subtract matrices\n"
            "6. show names of stored matrices\n"
-           "7. exit the program\n"
+           "7. matrix multiplication\n"
+           "8. exit the program\n"
            "Enter choice (number between 1-5)>\n");
 }
 

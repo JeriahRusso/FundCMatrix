@@ -61,3 +61,5 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int nu
 int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int number_of_matrices);
 
 void showMatrixNames(matrix_t* matrix, int number_of_matrices);
+
+int dotProductMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int number_of_matrices);

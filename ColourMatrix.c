@@ -86,7 +86,7 @@ int printMatrix(matrix_t* our_matrix, int number_of_matrices) {
         printf(KNRM);
 
     /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */      /* This line prints the corresponding row+col of the nested loop */
-      printf(" %2.f ", data[(row-1) + (col-1) * max_col]);
+      printf(" %p ", &data[(row-1) + (col-1) * max_col]);
     }
     /* separate rows by newlines */
     printf(KNRM); 
@@ -166,7 +166,7 @@ int setValues(matrix_t* our_matrix, int number_of_matrices) {
     printf("Matrix %i\t %i Rows\t %i Columns - Name: %s\n", i+1, our_matrix[i].rows, our_matrix[i].columns, our_matrix[i].matrixName);
   }
   
-  printf("Which matrix would you like to set the values for?\n");
+  printf("\nWhich matrix would you like to set the values for?\n");
   printf("Select a matrix number from the list above>\n");
   
   scanf("%d", &matrix_index);
@@ -176,18 +176,21 @@ int setValues(matrix_t* our_matrix, int number_of_matrices) {
     scanf("%d", &matrix_index);
   }
   
+  int max;
   matrix_index -= 1;
+  max = our_matrix[matrix_index].columns;
+
   
-  int max_col = our_matrix[matrix_index].columns;
   float *data = our_matrix[matrix_index].data;
   int row = 0, col = 0;
-  for (row = 1; row <= our_matrix[matrix_index].rows; row++) {
-    for (col = 1; col <= our_matrix[matrix_index].columns; col++) {
+  for (row = 0; row < our_matrix[matrix_index].rows; row++) {
+    for (col = 0; col < our_matrix[matrix_index].columns; col++) {
       
-      printf("Enter the value for column number %d of row number %d>\n", col, row);
-      scanf("%f", data + (row-1) + (col-1) * max_col);
-    }
+      printf("Enter the value for column number %d of row number %d>\n", col+1, row+1);
+        scanf("%f", &data[(row) + (col) * (max)]);
+
     /* separate rows by newlines */
+  }
   }
   our_matrix[matrix_index].data = data;
     return 0;
@@ -267,7 +270,7 @@ int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, i
       our_matrix[number_of_matrices].columns = our_matrix[matrix_index2].columns;
       int max_col = our_matrix[matrix_index1].columns;
       free(our_matrix[number_of_matrices].data);
-      our_matrix[number_of_matrices].data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index1].columns * sizeof(float)); 
+      our_matrix[number_of_matrices].data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index1].columns * sizeof(float));
       float *data1 = our_matrix[matrix_index1].data;
       float *data2 = our_matrix[matrix_index2].data;
       
@@ -330,3 +333,43 @@ void showMatrixNames(matrix_t* matrix, int number_of_matrices){
   printf("\n");
 }
 
+int dotProductMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int number_of_matrices){
+  char temp_name[50];
+  printf("Enter the name you would like to give to your resulting matrix>\n");
+  scanf("%s", temp_name);
+  if(our_matrix[matrix_index1].columns == our_matrix[matrix_index2].rows){
+      free(our_matrix[number_of_matrices].data);
+      our_matrix[number_of_matrices].data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index2].columns * sizeof(float)); 
+      int i, j, k, mA_Rows, mA_Cols, mB_Rows, mB_Cols;
+      
+      mA_Rows = our_matrix[matrix_index1].rows;
+      mB_Rows = our_matrix[matrix_index2].rows;
+      mA_Cols = our_matrix[matrix_index1].columns;
+      mB_Cols = our_matrix[matrix_index2].columns;
+      
+      our_matrix[number_of_matrices].rows = our_matrix[matrix_index1].rows;
+      our_matrix[number_of_matrices].columns = our_matrix[matrix_index2].columns;
+      
+      for(i = 0; i < mA_Rows; i++){
+        for(j = 0; j < mB_Cols; j++){
+          float sum = 0.0; 
+          for(k = 0; k < mB_Rows; k++)
+              sum = sum + our_matrix[matrix_index1].data[i * mA_Cols + k] * our_matrix[matrix_index2].data[k * mB_Cols + j];
+          our_matrix[number_of_matrices].data[i * our_matrix[number_of_matrices].columns + j] = sum;
+        }
+      }
+        
+      strcpy(our_matrix[number_of_matrices].matrixName, temp_name);
+      
+      printf("Success!\n");
+      printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n", number_of_matrices + 1, our_matrix[number_of_matrices].rows, our_matrix[number_of_matrices].columns,
+             our_matrix[number_of_matrices].matrixName);
+  
+  return 1;    
+  }
+  else{
+    printf("Matrices do not have required dimensions for multiplication. Try again.\n");
+    return 0;
+  }
+}
+  
