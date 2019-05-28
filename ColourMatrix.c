@@ -199,7 +199,8 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int nu
       our_matrix[number_of_matrices].rows = our_matrix[matrix_index2].rows;
       our_matrix[number_of_matrices].columns = our_matrix[matrix_index2].columns;
       int max_col = our_matrix[matrix_index1].columns;
-      float * data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index1].columns * sizeof(float)); 
+      free(our_matrix[number_of_matrices].data);
+      our_matrix[number_of_matrices].data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index1].columns * sizeof(float)); 
       float *data1 = our_matrix[matrix_index1].data;
       float *data2 = our_matrix[matrix_index2].data;
       char temp_name[50];
@@ -208,16 +209,15 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int nu
       int col, row;
       for(row = 1; row <= our_matrix[matrix_index2].rows; row++){
         for(col = 1; col <= our_matrix[matrix_index2].columns; col++){
-        data[(row-1) + (col-1) * max_col] =
+          our_matrix[number_of_matrices].data[(row-1) + (col-1) * max_col] =
           (data1[(row-1) + (col-1) * (max_col)]) + (data2[(row-1) + (col-1) * (max_col)]);  
         }
       }
-    our_matrix[number_of_matrices].data = data;
-    
+      
     strcpy(our_matrix[number_of_matrices].matrixName, temp_name);
     
     printf("Success!\n");
-    printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n", number_of_matrices, our_matrix[number_of_matrices].rows, our_matrix[number_of_matrices].columns,
+    printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n", number_of_matrices + 1, our_matrix[number_of_matrices].rows, our_matrix[number_of_matrices].columns,
            our_matrix[number_of_matrices].matrixName);
     
     row = 0, col = 0; 
@@ -243,7 +243,7 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int nu
           printf(KNRM);
         
         /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */      /* This line prints the corresponding row+col of the nested loop */
-        printf(" %2.f ", data[(row-1) + (col-1) * max_col]);
+        printf(" %2.f ", our_matrix[number_of_matrices].data[(row-1) + (col-1) * max_col]);
       }
       /* separate rows by newlines */
       printf(KNRM); 
@@ -266,22 +266,22 @@ int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, i
       our_matrix[number_of_matrices].rows = our_matrix[matrix_index2].rows;
       our_matrix[number_of_matrices].columns = our_matrix[matrix_index2].columns;
       int max_col = our_matrix[matrix_index1].columns;
-      float * data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index1].columns * sizeof(float));
+      free(our_matrix[number_of_matrices].data);
+      our_matrix[number_of_matrices].data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index1].columns * sizeof(float)); 
       float *data1 = our_matrix[matrix_index1].data;
       float *data2 = our_matrix[matrix_index2].data;
       
       int col, row;
       for(col = 1; col <= our_matrix[matrix_index2].columns; col++){
         for(row = 1; row <= our_matrix[matrix_index2].rows; row++){
-          data[(col-1) + (row-1) * max_col] =
+          our_matrix[number_of_matrices].data[(col-1) + (row-1) * max_col] =
             (data1[(col-1) + (row-1) * (max_col)]) - (data2[(col-1) + (row-1) * (max_col)]);  
         }
       }
-      our_matrix[number_of_matrices].data = data;
       strcpy(our_matrix[number_of_matrices].matrixName, temp_name);
       
       printf("Success!\n");
-      printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n", number_of_matrices, our_matrix[number_of_matrices].rows, our_matrix[number_of_matrices].columns,
+      printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n", number_of_matrices + 1, our_matrix[number_of_matrices].rows, our_matrix[number_of_matrices].columns,
              our_matrix[number_of_matrices].matrixName);
       
       row = 0, col = 0; 
@@ -307,7 +307,7 @@ int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, i
             printf(KNRM);
           
           /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */      /* This line prints the corresponding row+col of the nested loop */
-          printf(" %2.f ", data[(row-1) + (col-1) * max_col]);
+          printf(" %2.f ", our_matrix[number_of_matrices].data[(row-1) + (col-1) * max_col]);
         }
         /* separate rows by newlines */
         printf(KNRM); 
