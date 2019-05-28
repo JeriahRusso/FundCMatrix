@@ -45,28 +45,28 @@ int printMatrix(matrix_t* our_matrix, int number_of_matrices) {
   int counter = 0;
   int index = 0;
   int row = 0, col = 0, i = 0;
-  
+
   for(i = 0; i < number_of_matrices; i++){
     printf("Matrix %i\t %i Rows\t %i Columns - Name: %s\n", i+1, our_matrix[i].rows, our_matrix[i].columns, our_matrix[i].matrixName);
   }
   printf("\n");
-  
+
   printf("Which matrix would you like to print? Enter the matrix number from the list above\n");
-  
+
   scanf("%d", &index);
-  
+
   while(index < 1 || index > number_of_matrices){
     printf("Enter a number from the list of available matrices - number must be greater than zero and less than or equal to the number of available matrices:\n");
     scanf("%d", &index);
   }
-  
+
   index -= 1;
-  
+
   int max_col = our_matrix[index].columns;
   float *data = our_matrix[index].data;
-  
-  for (row = 1; row <= our_matrix[index].rows; row++) {
-    for (col = 1; col <= our_matrix[index].columns; col++) {
+
+  for (row = 0; row < our_matrix[index].rows; row++) {
+    for (col = 0; col < our_matrix[index].columns; col++) {
       counter++;
       if(counter == 1 || counter % 8 == 1)                              /* This bit sets the colour of the printer */
         printf(KRED);
@@ -86,10 +86,10 @@ int printMatrix(matrix_t* our_matrix, int number_of_matrices) {
         printf(KNRM);
 
     /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */      /* This line prints the corresponding row+col of the nested loop */
-      printf(" %p ", &data[(row-1) + (col-1) * max_col]);
+      printf(" %2.f ", data[(col) + (row) * max_col]);
     }
     /* separate rows by newlines */
-    printf(KNRM); 
+    printf(KNRM);
     printf("\n");
   }
   printf(KNRM);                                                         /* Set colour back to normal */
@@ -122,15 +122,15 @@ float* create_matrix(int * cols1, int* rows1){
   return our_matrix;
 
 }
- 
-*/ 
+
+*/
 
 int create_matrix(matrix_t* matrixP, int matrixLocation){
 
   char tempName[50];
   int rows, cols;
-  
-  
+
+
   printf("Enter a name for your matrix>\n");
   scanf("%s", tempName);
 
@@ -139,13 +139,13 @@ int create_matrix(matrix_t* matrixP, int matrixLocation){
 
   printf("Enter the number of cols>\n");
   scanf("%d", &cols);
-  
-  float * our_matrix = (float *) malloc(rows * cols * sizeof(float));  
-  
+
+  float * our_matrix = (float *) malloc(rows * cols * sizeof(float));
+
   int row = 0, col = 0;
   for (row = 1; row <= rows; row++) {
     for (col = 1; col <= cols; col++) {
-      
+
       our_matrix[(row-1) + (col-1) * cols] = 0;
     }
   }
@@ -165,29 +165,29 @@ int setValues(matrix_t* our_matrix, int number_of_matrices) {
   for(i = 0; i < number_of_matrices; i++){
     printf("Matrix %i\t %i Rows\t %i Columns - Name: %s\n", i+1, our_matrix[i].rows, our_matrix[i].columns, our_matrix[i].matrixName);
   }
-  
+
   printf("\nWhich matrix would you like to set the values for?\n");
   printf("Select a matrix number from the list above>\n");
-  
+
   scanf("%d", &matrix_index);
-  
+
   while(matrix_index < 1 || matrix_index > number_of_matrices){
     printf("Enter a number from the list of available matrices - number must be greater than zero and less than or equal to the number of available matrices:\n");
     scanf("%d", &matrix_index);
   }
-  
+
   int max;
   matrix_index -= 1;
   max = our_matrix[matrix_index].columns;
 
-  
+
   float *data = our_matrix[matrix_index].data;
   int row = 0, col = 0;
   for (row = 0; row < our_matrix[matrix_index].rows; row++) {
     for (col = 0; col < our_matrix[matrix_index].columns; col++) {
-      
+
       printf("Enter the value for column number %d of row number %d>\n", col+1, row+1);
-        scanf("%f", &data[(row) + (col) * (max)]);
+        scanf("%f", &data[(col) + (row) * (max)]);
 
     /* separate rows by newlines */
   }
@@ -203,7 +203,7 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int nu
       our_matrix[number_of_matrices].columns = our_matrix[matrix_index2].columns;
       int max_col = our_matrix[matrix_index1].columns;
       free(our_matrix[number_of_matrices].data);
-      our_matrix[number_of_matrices].data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index1].columns * sizeof(float)); 
+      our_matrix[number_of_matrices].data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index1].columns * sizeof(float));
       float *data1 = our_matrix[matrix_index1].data;
       float *data2 = our_matrix[matrix_index2].data;
       char temp_name[50];
@@ -213,17 +213,17 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int nu
       for(row = 1; row <= our_matrix[matrix_index2].rows; row++){
         for(col = 1; col <= our_matrix[matrix_index2].columns; col++){
           our_matrix[number_of_matrices].data[(row-1) + (col-1) * max_col] =
-          (data1[(row-1) + (col-1) * (max_col)]) + (data2[(row-1) + (col-1) * (max_col)]);  
+          (data1[(row-1) + (col-1) * (max_col)]) + (data2[(row-1) + (col-1) * (max_col)]);
         }
       }
-      
+
     strcpy(our_matrix[number_of_matrices].matrixName, temp_name);
-    
+
     printf("Success!\n");
     printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n", number_of_matrices + 1, our_matrix[number_of_matrices].rows, our_matrix[number_of_matrices].columns,
            our_matrix[number_of_matrices].matrixName);
-    
-    row = 0, col = 0; 
+
+    row = 0, col = 0;
     int counter = 0;
     for (row = 1; row <= our_matrix[number_of_matrices].rows; row++) {
       for (col = 1; col <= our_matrix[number_of_matrices].columns; col++) {
@@ -244,15 +244,15 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int nu
           printf(KWHT);
         else if(counter == 8 || counter % 8 == 0)
           printf(KNRM);
-        
+
         /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */      /* This line prints the corresponding row+col of the nested loop */
         printf(" %2.f ", our_matrix[number_of_matrices].data[(row-1) + (col-1) * max_col]);
       }
       /* separate rows by newlines */
-      printf(KNRM); 
+      printf(KNRM);
       printf("\n");
     }
-      
+
       return 1;
     }
   }
@@ -273,21 +273,21 @@ int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, i
       our_matrix[number_of_matrices].data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index1].columns * sizeof(float));
       float *data1 = our_matrix[matrix_index1].data;
       float *data2 = our_matrix[matrix_index2].data;
-      
+
       int col, row;
       for(col = 1; col <= our_matrix[matrix_index2].columns; col++){
         for(row = 1; row <= our_matrix[matrix_index2].rows; row++){
           our_matrix[number_of_matrices].data[(col-1) + (row-1) * max_col] =
-            (data1[(col-1) + (row-1) * (max_col)]) - (data2[(col-1) + (row-1) * (max_col)]);  
+            (data1[(col-1) + (row-1) * (max_col)]) - (data2[(col-1) + (row-1) * (max_col)]);
         }
       }
       strcpy(our_matrix[number_of_matrices].matrixName, temp_name);
-      
+
       printf("Success!\n");
       printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n", number_of_matrices + 1, our_matrix[number_of_matrices].rows, our_matrix[number_of_matrices].columns,
              our_matrix[number_of_matrices].matrixName);
-      
-      row = 0, col = 0; 
+
+      row = 0, col = 0;
       int counter = 0;
       for (row = 1; row <= our_matrix[number_of_matrices].rows; row++) {
         for (col = 1; col <= our_matrix[number_of_matrices].columns; col++) {
@@ -308,15 +308,15 @@ int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, i
             printf(KWHT);
           else if(counter == 8 || counter % 8 == 0)
             printf(KNRM);
-          
+
           /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */      /* This line prints the corresponding row+col of the nested loop */
           printf(" %2.f ", our_matrix[number_of_matrices].data[(row-1) + (col-1) * max_col]);
         }
         /* separate rows by newlines */
-        printf(KNRM); 
+        printf(KNRM);
         printf("\n");
       }
-      
+
       return 1;
     }
   }
@@ -339,37 +339,36 @@ int dotProductMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2,
   scanf("%s", temp_name);
   if(our_matrix[matrix_index1].columns == our_matrix[matrix_index2].rows){
       free(our_matrix[number_of_matrices].data);
-      our_matrix[number_of_matrices].data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index2].columns * sizeof(float)); 
+      our_matrix[number_of_matrices].data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index2].columns * sizeof(float));
       int i, j, k, mA_Rows, mA_Cols, mB_Rows, mB_Cols;
-      
+
       mA_Rows = our_matrix[matrix_index1].rows;
       mB_Rows = our_matrix[matrix_index2].rows;
       mA_Cols = our_matrix[matrix_index1].columns;
       mB_Cols = our_matrix[matrix_index2].columns;
-      
+
       our_matrix[number_of_matrices].rows = our_matrix[matrix_index1].rows;
       our_matrix[number_of_matrices].columns = our_matrix[matrix_index2].columns;
-      
+
       for(i = 0; i < mA_Rows; i++){
         for(j = 0; j < mB_Cols; j++){
-          float sum = 0.0; 
+          float sum = 0.0;
           for(k = 0; k < mB_Rows; k++)
               sum = sum + our_matrix[matrix_index1].data[i * mA_Cols + k] * our_matrix[matrix_index2].data[k * mB_Cols + j];
           our_matrix[number_of_matrices].data[i * our_matrix[number_of_matrices].columns + j] = sum;
         }
       }
-        
+
       strcpy(our_matrix[number_of_matrices].matrixName, temp_name);
-      
+
       printf("Success!\n");
       printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n", number_of_matrices + 1, our_matrix[number_of_matrices].rows, our_matrix[number_of_matrices].columns,
              our_matrix[number_of_matrices].matrixName);
-  
-  return 1;    
+
+  return 1;
   }
   else{
     printf("Matrices do not have required dimensions for multiplication. Try again.\n");
     return 0;
   }
 }
-  
