@@ -13,12 +13,12 @@ void print_menu (void);                                           /* Print menu 
 char * scanline(char *dest, int dest_len);
 
 /* MAIN --------------------------------------------------------------------------------------------|
- *                                                                                                                                   
+ *
  */
 
 /* TODO:  When creating a new matrix allocate the memory here */
 
-int main(){
+int main(void){
   printf(KNRM);                                                   /* Set colour palette to normal */
   int number_of_users = 0;
   char chosen_option_char[10], chosen_user_option_char[10];       /* Read string, store in here   */
@@ -130,7 +130,7 @@ printf("Login Successful\n");
       int i;
       for(i = 0; i < number_of_matrices; i++){
         free(matrix[i].data);
-      } 
+      }
         /* deleteMatrix(new_matrix); */
         return 0;
       }
@@ -143,7 +143,7 @@ return 0;
 }
 
 /* FUNCTIONS -------------------------------------------------------------------------|
- *                                                                                                                                      
+ *
  */
 
 void print_menu (void)
@@ -187,9 +187,9 @@ char * scanline(char *dest, int dest_len){
        ch != '\n' && ch != EOF && i < dest_len -1; ch = getchar())
     dest[i++] = ch;
   dest[i] = '\0';
-  
+
   while (ch != '\n' && ch != EOF)
     ch = getchar();
-  
+
   return (dest);
 }
