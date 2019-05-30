@@ -442,6 +442,7 @@ void saveSessionToFile(matrix_t* matrices, int number_of_matrices,
         fprintf(fp, "%d,%f,\n", occurrence, data);
     }
     fclose(fp);
+    printf("Session saved as %s.\n", fileName);
 }
 
 int loadSessionFromFile(matrix_t* matrix, char* file){
@@ -455,7 +456,10 @@ int loadSessionFromFile(matrix_t* matrix, char* file){
     matrixNum = 0;
     dataLoc = 0;
     repeat = 0;
-    fp = fopen(file, "r");
+    if(!(fp = fopen(file, "r"))){
+        printf("File %s does not exist.\n", file);
+        return 0;
+    }
     cleanString(dataHolder);
 
     inChar = getc(fp);
@@ -526,5 +530,6 @@ int loadSessionFromFile(matrix_t* matrix, char* file){
         }
     }
     fclose(fp);
+    printf("Session successfully loaded from %s.\n", file);
     return matrixNum;
 }

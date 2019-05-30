@@ -156,7 +156,13 @@ int load_users_from_file(user_t* user){
     i = 0;
     passLetter = 0;
     isUsername = 1;
-    FILE *input = fopen(DB_NAME, "r");
+    FILE *input;
+
+    if(!(input = fopen(DB_NAME, "r"))){
+        input = fopen(DB_NAME, "w");
+        fclose(input);
+        return 0;
+    }
 
     inChar = getc(input);
     while(inChar != EOF){

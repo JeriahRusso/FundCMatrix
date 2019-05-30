@@ -1,3 +1,0 @@
-Test 30 18 60 50 
-Tester 30 18 
-Testing 62 18 
