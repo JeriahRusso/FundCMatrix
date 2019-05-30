@@ -21,7 +21,9 @@
 
 /* Name of the db file */
 #define DB_NAME "db.txt"
+#define SESSION_DIRECTORY "./sessions/"
 #define MAX_FILE_NAME 50
+#define DIRECTORY_LENGTH 11
 
 struct matrix{
     char matrixName[MAX_FILE_NAME];

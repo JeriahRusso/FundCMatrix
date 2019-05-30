@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "accounts.h"
 #include "ColourMatrix.h"
 
@@ -142,7 +143,9 @@ printf("Login Successful\n");
         printf("Name of saved session> ");
         scanf("%s", fileName);
         strcat(fileName, ".csv");
+        chdir(SESSION_DIRECTORY);
         saveSessionToFile(matrix, number_of_matrices, fileName);
+        chdir("..");
         break;
     }
     case 9:
@@ -151,7 +154,9 @@ printf("Login Successful\n");
         printf("Name of saved session> ");
         scanf("%s", fileName);
         strcat(fileName, ".csv");
+        chdir(SESSION_DIRECTORY);
         number_of_matrices = loadSessionFromFile(matrix, fileName);
+        chdir("..");
         break;
     }
     case 10:
