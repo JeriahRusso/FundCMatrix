@@ -229,11 +229,11 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2,
                 " resulting matrix>\n");
       scanf("%s", temp_name);
       int col, row;
-      for(row = 1; row <= our_matrix[matrix_index2].rows; row++){
-        for(col = 1; col <= our_matrix[matrix_index2].columns; col++){
-          our_matrix[number_of_matrices].data[(row-1) + (col-1) * max_col] =
-          (data1[(row-1) + (col-1) * (max_col)]) +
-            (data2[(row-1) + (col-1) * (max_col)]);
+      for(row = 0; row < our_matrix[matrix_index2].rows; row++){
+        for(col = 0; col < our_matrix[matrix_index2].columns; col++){
+          our_matrix[number_of_matrices].data[(row) + (col) * max_col] =
+          (data1[(row) + (col) * (max_col)]) +
+            (data2[(row) + (col) * (max_col)]);
         }
       }
 
@@ -247,8 +247,8 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2,
 
     row = 0, col = 0;
     int counter = 0;
-    for (row = 1; row <= our_matrix[number_of_matrices].rows; row++) {
-      for (col = 1; col <= our_matrix[number_of_matrices].columns; col++) {
+    for (row = 0; row < our_matrix[number_of_matrices].rows; row++) {
+      for (col = 0; col < our_matrix[number_of_matrices].columns; col++) {
         counter++;
         /* This bit sets the colour of the printer */
         if(counter == 1 || counter % 8 == 1)
@@ -271,7 +271,7 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2,
         /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */
         /* This line prints the corresponding row+col of the nested loop */
         printf(" %2.f ",
-            our_matrix[number_of_matrices].data[(row-1) + (col-1) * max_col]);
+            our_matrix[number_of_matrices].data[(row) + (col) * max_col]);
       }
       /* separate rows by newlines */
       printf(KNRM);
@@ -304,11 +304,11 @@ int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2,
       float *data2 = our_matrix[matrix_index2].data;
 
       int col, row;
-      for(col = 1; col <= our_matrix[matrix_index2].columns; col++){
-        for(row = 1; row <= our_matrix[matrix_index2].rows; row++){
-          our_matrix[number_of_matrices].data[(col-1) + (row-1) * max_col] =
-            (data1[(col-1) + (row-1) * (max_col)]) -
-            (data2[(col-1) + (row-1) * (max_col)]);
+      for(col = 0; col < our_matrix[matrix_index2].columns; col++){
+        for(row = 0; row < our_matrix[matrix_index2].rows; row++){
+          our_matrix[number_of_matrices].data[(col) + (row) * max_col] =
+            (data1[(col) + (row) * (max_col)]) -
+            (data2[(col) + (row) * (max_col)]);
         }
       }
       strcpy(our_matrix[number_of_matrices].matrixName, temp_name);
@@ -387,7 +387,8 @@ int dotProductMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2,
       mB_Cols = our_matrix[matrix_index2].columns;
 
       our_matrix[number_of_matrices].rows = our_matrix[matrix_index1].rows;
-      our_matrix[number_of_matrices].columns = our_matrix[matrix_index2].columns;
+      our_matrix[number_of_matrices].columns =
+            our_matrix[matrix_index2].columns;
 
       for(i = 0; i < mA_Rows; i++){
         for(j = 0; j < mB_Cols; j++){
