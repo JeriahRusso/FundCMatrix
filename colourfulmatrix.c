@@ -8,21 +8,22 @@
 
 
 user_t user[100];
-matrix_t matrix[100];                                             /* Initialise a matrix array of structures */
-void print_menu (void);                                           /* Print menu                   */
+matrix_t matrix[100];              /* Initialise a matrix array of structures */
+void print_menu (void);            /* Print menu*/
 char * scanline(char *dest, int dest_len);
 
-/* MAIN --------------------------------------------------------------------------------------------|
+/* MAIN -----------------------------------------------------------------------|
  *
  */
 
 /* TODO:  When creating a new matrix allocate the memory here */
 
 int main(void){
-  printf(KNRM);                                                   /* Set colour palette to normal */
+  printf(KNRM);                               /* Set colour palette to normal */
   int number_of_users = 0;
-  char chosen_option_char[10], chosen_user_option_char[10];       /* Read string, store in here   */
-  int chosen_option, chosen_user_option;                          /* Convert string to int        */
+  /* Read string, store in here   */
+  char chosen_option_char[10], chosen_user_option_char[10];
+  int chosen_option, chosen_user_option;      /* Convert string to int        */
   user_t user[100];
   int logged_in = 0;
   int number_of_matrices = 0;
@@ -76,14 +77,17 @@ printf("Login Successful\n");
     {
       int addMatrixSuccessful = 0;
       showMatrixNames(matrix, number_of_matrices);
-      printf("From the matrices above, which matrix do you want to add to? Enter the matrix number>\n");
+      printf("From the matrices above, which matrix do you want to add to?"
+                "Enter the matrix number>\n");
       scanf("%d", &matrix_index1);
       showMatrixNames(matrix, number_of_matrices);
-      printf("Which matrix would you like to add to Matrix %d? Enter the matrix number>\n", matrix_index1);
+      printf("Which matrix would you like to add to Matrix %d? "
+                "Enter the matrix number>\n", matrix_index1);
       matrix_index1 -= 1;
       scanf("%d", &matrix_index2);
       matrix_index2 -= 1;
-      addMatrixSuccessful = addMatrix(matrix, matrix_index1, matrix_index2, number_of_matrices);
+      addMatrixSuccessful = addMatrix(matrix, matrix_index1, matrix_index2,
+                                        number_of_matrices);
       if(addMatrixSuccessful == 1){
       number_of_matrices++;
       }
@@ -93,14 +97,17 @@ printf("Login Successful\n");
     {
       int subMatrixSuccessful = 0;
       showMatrixNames(matrix, number_of_matrices);
-      printf("From the matrices above, which matrix do you want to subtract from? Enter the matrix number>\n");
+      printf("From the matrices above, which matrix do you want to subtract"
+                "from? Enter the matrix number>\n");
       scanf("%d", &matrix_index1);
       showMatrixNames(matrix, number_of_matrices);
-      printf("Which matrix would you like to subtract from Matrix %d? Enter the matrix number>\n", matrix_index1);
+      printf("Which matrix would you like to subtract from Matrix %d?"
+                "Enter the matrix number>\n", matrix_index1);
       matrix_index1 -= 1;
       scanf("%d", &matrix_index2);
       matrix_index2 -= 1;
-      subMatrixSuccessful = subtractMatrix(matrix, matrix_index1, matrix_index2, number_of_matrices);
+      subMatrixSuccessful = subtractMatrix(matrix, matrix_index1, matrix_index2,
+                                            number_of_matrices);
       if(subMatrixSuccessful == 1){
       number_of_matrices++;
       }
@@ -113,14 +120,17 @@ printf("Login Successful\n");
     {
       int dotProductSuccessful = 0;
       showMatrixNames(matrix, number_of_matrices);
-      printf("From the matrices above, which matrix do you want to multiply by? Enter the matrix number>\n");
+      printf("From the matrices above, which matrix do you want to multiply by?"
+                "Enter the matrix number>\n");
       scanf("%d", &matrix_index1);
       showMatrixNames(matrix, number_of_matrices);
-      printf("Which matrix would you like Matrix %d to multiply? Enter the matrix number>\n", matrix_index1);
+      printf("Which matrix would you like Matrix %d to multiply?"
+                "Enter the matrix number>\n", matrix_index1);
       matrix_index1 -= 1;
       scanf("%d", &matrix_index2);
       matrix_index2 -= 1;
-      dotProductSuccessful = dotProductMatrix(matrix, matrix_index1, matrix_index2, number_of_matrices);
+      dotProductSuccessful = dotProductMatrix(matrix, matrix_index1,
+                                matrix_index2, number_of_matrices);
       if(dotProductSuccessful){
         number_of_matrices++;
       }
@@ -162,7 +172,7 @@ printf("Login Successful\n");
 return 0;
 }
 
-/* FUNCTIONS -------------------------------------------------------------------------|
+/* FUNCTIONS ------------------------------------------------------------------|
  *
  */
 

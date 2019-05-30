@@ -2,7 +2,7 @@
  *        User Account Management Implementation File:
  *        accounts.c
  *
- *        Fundamentals of Programming with C Assessment Task 3 - Group Assignment
+ *       Fundamentals of Programming with C Assessment Task 3 - Group Assignment
  */
 
 
@@ -13,12 +13,15 @@
 
 /* Creates a new user account.
  *
- * Takes the user_t user struct array created at runtime and the int number_of_users (a variable in the main).
+ * Takes the user_t user struct array created at runtime and the
+ * int number_of_users (a variable in the main).
  *
- * First asks for user input of username and password (reads as string, blocks echo of password insertion), then creates
+ * First asks for user input of username and password
+ * (reads as string, blocks echo of password insertion), then creates
  * a new user account at the array address pointed to by user[number_of_users]
  *
- * number_of_users is a runtime variable in the main function that increments upon creation of a new user account and
+ * number_of_users is a runtime variable in the main function
+ * that increments upon creation of a new user account and
  * after loading users from the db file
  */
 void create_user(user_t* user, int number_of_users){
@@ -46,22 +49,33 @@ void create_user(user_t* user, int number_of_users){
 
 /* Logs a user in.
  *
- * 1. Takes the user_t user struct array created at runtime and the int number_of_users (a variable in the main).
+ * 1. Takes the user_t user struct array created at runtime and the int
+ * number_of_users (a variable in the main).
  *
- * 2. Asks for user input of username, accepts a string, then stores into a char array: char temp_user[50]
+ * 2. Asks for user input of username, accepts a string,
+ * then stores into a char array: char temp_user[50]
  *
- * 3. Loops over the user_t user struct array created at runtime. Using string.h::strcmp to determine if the username provided
- * matches any usernames on-file. If it matches, the message "Username Matched" is printed and it moves on to asking for a password.
- * If the username input doesn't match an existing username, the message "username does not exist - create a new account?"
- * is printed, giving the user a choice of 1. trying their username again or 2. creating a new account.
+ * 3. Loops over the user_t user struct array created at runtime.
+ * Using string.h::strcmp to determine if the username provided
+ * matches any usernames on-file. If it matches, the message "Username Matched"
+ * is printed and it moves on to asking for a password.
+ * If the username input doesn't match an existing username,
+ * the message "username does not exist - create a new account?"
+ * is printed, giving the user a choice of 1. trying their username again or
+ * 2. creating a new account.
  *
- * 4. Asks for user input of a password. Echo is turned off via system call "stty -echo" to hide user input of password from the terminal/stdout
+ * 4. Asks for user input of a password. Echo is turned off via system call
+ * "stty -echo" to hide user input of password from the terminal/stdout
  * Accepts as string and stores into a char array: char temp_password[50]
  *
- * 5. Loops over the user_t user struct array created at runtime. Using string.h::strcmp to determine if the password provided
- * matches any passwords on-file. If it matches, the message "Login Successful" is displayed to the user and the program menu initiates.
- * If the password input doesnt match an existing password, the message "Login Unsuccessful - Try again?" appears, giving the user the option to
- * try their username and password again, cretae a new account, or exit the program.
+ * 5. Loops over the user_t user struct array created at runtime.
+ * Using string.h::strcmp to determine if the password provided
+ * matches any passwords on-file. If it matches, the message
+ * "Login Successful" is displayed to the user and the program menu initiates.
+ * If the password input doesnt match an existing password, the message
+ * "Login Unsuccessful - Try again?" appears, giving the user the option to
+ * try their username and password again, cretae a new account,
+ * or exit the program.
  */
 void user_login(user_t* user, int number_of_users){
   char dont_print[20];
@@ -106,7 +120,8 @@ void user_login(user_t* user, int number_of_users){
 
 /* Saves the username and password of all user accounts to a database file.
  *
- * Prints each element of the user_t user struct array (username and password) to the db file for storage.
+ * Prints each element of the user_t user struct array (username and password)
+ * to the db file for storage.
  */
 void save_users_to_db(user_t* user, int number_of_users){
   FILE* fp;
@@ -129,7 +144,8 @@ void save_users_to_db(user_t* user, int number_of_users){
 }
 
 
-/* Loads all users from the db file into the user_t user struct array on program startup. */
+/* Loads all users from the db file into the user_t user struct array
+ * on program startup. */
 int load_users_from_file(user_t* user){
     int i, isUsername, passLetter, data_counter;
     char dataHolder[MAX_PASSWORD_LENGTH];
@@ -147,7 +163,8 @@ int load_users_from_file(user_t* user){
         if(inChar == ' '){
             if(isUsername){
                 dataHolder[++i] = '\0';
-                memcpy(user[data_counter].username, dataHolder, sizeof(dataHolder));
+                memcpy(user[data_counter].username, dataHolder,
+                        sizeof(dataHolder));
                 cleanString(dataHolder);
                 i = 0;
                 isUsername = 0;

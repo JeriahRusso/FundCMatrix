@@ -36,9 +36,11 @@ int deleteMatrix(float * mtx) {
 }
 
 
-/* Uses a nested loop to cycle through each row and column, printing each value as it goes
+/* Uses a nested loop to cycle through each row and column,
+ * printing each value as it goes
  *
- * Before landing on the value it is about to print, this function changes the background colour and font colour (there are 8 colour combinations
+ * Before landing on the value it is about to print, this function changes
+ * the background colour and font colour (there are 8 colour combinations
  * that it cycles through)
  */
 int printMatrix(matrix_t* our_matrix, int number_of_matrices) {
@@ -47,16 +49,20 @@ int printMatrix(matrix_t* our_matrix, int number_of_matrices) {
   int row = 0, col = 0, i = 0;
 
   for(i = 0; i < number_of_matrices; i++){
-    printf("Matrix %i\t %i Rows\t %i Columns - Name: %s\n", i+1, our_matrix[i].rows, our_matrix[i].columns, our_matrix[i].matrixName);
+    printf("Matrix %i\t %i Rows\t %i Columns - Name: %s\n", i+1,
+        our_matrix[i].rows, our_matrix[i].columns, our_matrix[i].matrixName);
   }
   printf("\n");
 
-  printf("Which matrix would you like to print? Enter the matrix number from the list above\n");
+  printf("Which matrix would you like to print?"
+         " Enter the matrix number from the list above\n");
 
   scanf("%d", &index);
 
   while(index < 1 || index > number_of_matrices){
-    printf("Enter a number from the list of available matrices - number must be greater than zero and less than or equal to the number of available matrices:\n");
+    printf("Enter a number from the list of available matrices - "
+        "number must be greater than zero and less than or equal to the "
+        "number of available matrices:\n");
     scanf("%d", &index);
   }
 
@@ -68,7 +74,8 @@ int printMatrix(matrix_t* our_matrix, int number_of_matrices) {
   for (row = 0; row < our_matrix[index].rows; row++) {
     for (col = 0; col < our_matrix[index].columns; col++) {
       counter++;
-      if(counter == 1 || counter % 8 == 1)                              /* This bit sets the colour of the printer */
+       /* This bit sets the colour of the printer */
+      if(counter == 1 || counter % 8 == 1)
         printf(KRED);
       else if(counter == 2 || counter % 8 == 2)
         printf(KGRN);
@@ -85,22 +92,26 @@ int printMatrix(matrix_t* our_matrix, int number_of_matrices) {
       else if(counter == 8 || counter % 8 == 0)
         printf(KNRM);
 
-    /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */      /* This line prints the corresponding row+col of the nested loop */
+    /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */
+    /* This line prints the corresponding row+col of the nested loop */
       printf(" %2.f ", data[(col) + (row) * max_col]);
     }
     /* separate rows by newlines */
     printf(KNRM);
     printf("\n");
   }
-  printf(KNRM);                                                         /* Set colour back to normal */
+  printf(KNRM);                                 /* Set colour back to normal */
     return 0;
 }
 
-/* Creates a matrix by returning a 2d array of the dimensions matrix[rows1][cols1]
+/* Creates a matrix by returning a 2d array of the
+ * dimensions matrix[rows1][cols1]
  *
- * This function asks for user input for number of rows and columns, then returns a 2d array of matching dimensions.
+ * This function asks for user input for number of rows and columns,
+ * then returns a 2d array of matching dimensions.
  *
- * rows1 and cols1 are int* values that get updated and are used by other functions such as printMatrix
+ * rows1 and cols1 are int* values that get updated and are used
+ * by other functions such as printMatrix
  */
 
 /*
@@ -162,7 +173,8 @@ int create_matrix(matrix_t* matrixP, int matrixLocation){
 int setValues(matrix_t* our_matrix, int number_of_matrices) {
   int i, matrix_index;
   for(i = 0; i < number_of_matrices; i++){
-    printf("Matrix %i\t %i Rows\t %i Columns - Name: %s\n", i+1, our_matrix[i].rows, our_matrix[i].columns, our_matrix[i].matrixName);
+    printf("Matrix %i\t %i Rows\t %i Columns - Name: %s\n", i+1,
+        our_matrix[i].rows, our_matrix[i].columns, our_matrix[i].matrixName);
   }
 
   printf("\nWhich matrix would you like to set the values for?\n");
@@ -171,7 +183,9 @@ int setValues(matrix_t* our_matrix, int number_of_matrices) {
   scanf("%d", &matrix_index);
 
   while(matrix_index < 1 || matrix_index > number_of_matrices){
-    printf("Enter a number from the list of available matrices - number must be greater than zero and less than or equal to the number of available matrices:\n");
+    printf("Enter a number from the list of available matrices -"
+        " number must be greater than zero and less than or equal to the"
+        " number of available matrices:\n");
     scanf("%d", &matrix_index);
   }
 
@@ -185,7 +199,8 @@ int setValues(matrix_t* our_matrix, int number_of_matrices) {
   for (row = 0; row < our_matrix[matrix_index].rows; row++) {
     for (col = 0; col < our_matrix[matrix_index].columns; col++) {
 
-      printf("Enter the value for column number %d of row number %d>\n", col+1, row+1);
+      printf("Enter the value for column number %d of row number %d>\n",
+                col+1, row+1);
         scanf("%f", &data[(col) + (row) * (max)]);
 
     /* separate rows by newlines */
@@ -195,40 +210,49 @@ int setValues(matrix_t* our_matrix, int number_of_matrices) {
     return 0;
 }
 
-int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int number_of_matrices){
+int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2,
+                int number_of_matrices){
   if(our_matrix[matrix_index1].columns == our_matrix[matrix_index2].columns){
     if(our_matrix[matrix_index1].rows == our_matrix[matrix_index2].rows){
       our_matrix[number_of_matrices].rows = our_matrix[matrix_index2].rows;
-      our_matrix[number_of_matrices].columns = our_matrix[matrix_index2].columns;
+      our_matrix[number_of_matrices].columns =
+        our_matrix[matrix_index2].columns;
       int max_col = our_matrix[matrix_index1].columns;
       free(our_matrix[number_of_matrices].data);
-      our_matrix[number_of_matrices].data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index1].columns * sizeof(float));
+      our_matrix[number_of_matrices].data =
+            (float *) malloc(our_matrix[matrix_index1].rows
+            * our_matrix[matrix_index1].columns * sizeof(float));
       float *data1 = our_matrix[matrix_index1].data;
       float *data2 = our_matrix[matrix_index2].data;
       char temp_name[50];
-      printf("Enter the name you would like to give to your resulting matrix>\n");
+      printf("Enter the name you would like to give to your"
+                " resulting matrix>\n");
       scanf("%s", temp_name);
       int col, row;
       for(row = 1; row <= our_matrix[matrix_index2].rows; row++){
         for(col = 1; col <= our_matrix[matrix_index2].columns; col++){
           our_matrix[number_of_matrices].data[(row-1) + (col-1) * max_col] =
-          (data1[(row-1) + (col-1) * (max_col)]) + (data2[(row-1) + (col-1) * (max_col)]);
+          (data1[(row-1) + (col-1) * (max_col)]) +
+            (data2[(row-1) + (col-1) * (max_col)]);
         }
       }
 
     strcpy(our_matrix[number_of_matrices].matrixName, temp_name);
 
     printf("Success!\n");
-    printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n", number_of_matrices + 1, our_matrix[number_of_matrices].rows, our_matrix[number_of_matrices].columns,
-           our_matrix[number_of_matrices].matrixName);
+    printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n",
+        number_of_matrices + 1, our_matrix[number_of_matrices].rows,
+        our_matrix[number_of_matrices].columns,
+        our_matrix[number_of_matrices].matrixName);
 
     row = 0, col = 0;
     int counter = 0;
     for (row = 1; row <= our_matrix[number_of_matrices].rows; row++) {
       for (col = 1; col <= our_matrix[number_of_matrices].columns; col++) {
         counter++;
-        if(counter == 1 || counter % 8 == 1)                              /* This bit sets the colour of the printer */
-    printf(KRED);
+        /* This bit sets the colour of the printer */
+        if(counter == 1 || counter % 8 == 1)
+          printf(KRED);
         else if(counter == 2 || counter % 8 == 2)
           printf(KGRN);
         else if(counter == 3 || counter % 8 == 3)
@@ -244,8 +268,10 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int nu
         else if(counter == 8 || counter % 8 == 0)
           printf(KNRM);
 
-        /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */      /* This line prints the corresponding row+col of the nested loop */
-        printf(" %2.f ", our_matrix[number_of_matrices].data[(row-1) + (col-1) * max_col]);
+        /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */
+        /* This line prints the corresponding row+col of the nested loop */
+        printf(" %2.f ",
+            our_matrix[number_of_matrices].data[(row-1) + (col-1) * max_col]);
       }
       /* separate rows by newlines */
       printf(KNRM);
@@ -259,17 +285,21 @@ int addMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int nu
   return 0;
 }
 
-int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int number_of_matrices){
+int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2,
+                        int number_of_matrices){
   char temp_name[50];
   printf("Enter the name you would like to give to your resulting matrix>\n");
   scanf("%s", temp_name);
   if(our_matrix[matrix_index1].columns == our_matrix[matrix_index2].columns){
     if(our_matrix[matrix_index1].rows == our_matrix[matrix_index2].rows){
       our_matrix[number_of_matrices].rows = our_matrix[matrix_index2].rows;
-      our_matrix[number_of_matrices].columns = our_matrix[matrix_index2].columns;
+      our_matrix[number_of_matrices].columns =
+        our_matrix[matrix_index2].columns;
       int max_col = our_matrix[matrix_index1].columns;
       free(our_matrix[number_of_matrices].data);
-      our_matrix[number_of_matrices].data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index1].columns * sizeof(float));
+      our_matrix[number_of_matrices].data =
+        (float *) malloc(our_matrix[matrix_index1].rows
+            * our_matrix[matrix_index1].columns * sizeof(float));
       float *data1 = our_matrix[matrix_index1].data;
       float *data2 = our_matrix[matrix_index2].data;
 
@@ -277,21 +307,25 @@ int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, i
       for(col = 1; col <= our_matrix[matrix_index2].columns; col++){
         for(row = 1; row <= our_matrix[matrix_index2].rows; row++){
           our_matrix[number_of_matrices].data[(col-1) + (row-1) * max_col] =
-            (data1[(col-1) + (row-1) * (max_col)]) - (data2[(col-1) + (row-1) * (max_col)]);
+            (data1[(col-1) + (row-1) * (max_col)]) -
+            (data2[(col-1) + (row-1) * (max_col)]);
         }
       }
       strcpy(our_matrix[number_of_matrices].matrixName, temp_name);
 
       printf("Success!\n");
-      printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n", number_of_matrices + 1, our_matrix[number_of_matrices].rows, our_matrix[number_of_matrices].columns,
-             our_matrix[number_of_matrices].matrixName);
+      printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n",
+        number_of_matrices + 1, our_matrix[number_of_matrices].rows,
+        our_matrix[number_of_matrices].columns,
+        our_matrix[number_of_matrices].matrixName);
 
       row = 0, col = 0;
       int counter = 0;
       for (row = 1; row <= our_matrix[number_of_matrices].rows; row++) {
         for (col = 1; col <= our_matrix[number_of_matrices].columns; col++) {
              counter++;
-          if(counter == 1 || counter % 8 == 1)                              /* This bit sets the colour of the printer */
+          /* This bit sets the colour of the printer */
+          if(counter == 1 || counter % 8 == 1)
             printf(KRED);
           else if(counter == 2 || counter % 8 == 2)
             printf(KGRN);
@@ -308,8 +342,10 @@ int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, i
           else if(counter == 8 || counter % 8 == 0)
             printf(KNRM);
 
-          /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */      /* This line prints the corresponding row+col of the nested loop */
-          printf(" %2.f ", our_matrix[number_of_matrices].data[(row-1) + (col-1) * max_col]);
+          /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */
+          /* This line prints the corresponding row+col of the nested loop */
+          printf(" %2.f ",
+            our_matrix[number_of_matrices].data[(row-1) + (col-1) * max_col]);
         }
         /* separate rows by newlines */
         printf(KNRM);
@@ -327,18 +363,22 @@ void showMatrixNames(matrix_t* matrix, int number_of_matrices){
   int i;
   printf("The number of stored matrices is %d\n", number_of_matrices);
   for(i = 0; i < number_of_matrices; i++){
-    printf("Matrix %i\t %i Rows\t %i Columns - Name: %s\n", i+1, matrix[i].rows, matrix[i].columns, matrix[i].matrixName);
+    printf("Matrix %i\t %i Rows\t %i Columns - Name: %s\n", i+1,
+        matrix[i].rows, matrix[i].columns, matrix[i].matrixName);
   }
   printf("\n");
 }
 
-int dotProductMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int number_of_matrices){
+int dotProductMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2,
+                        int number_of_matrices){
   char temp_name[50];
   printf("Enter the name you would like to give to your resulting matrix>\n");
   scanf("%s", temp_name);
   if(our_matrix[matrix_index1].columns == our_matrix[matrix_index2].rows){
       free(our_matrix[number_of_matrices].data);
-      our_matrix[number_of_matrices].data = (float *) malloc(our_matrix[matrix_index1].rows * our_matrix[matrix_index2].columns * sizeof(float));
+      our_matrix[number_of_matrices].data =
+        (float *) malloc(our_matrix[matrix_index1].rows *
+                our_matrix[matrix_index2].columns * sizeof(float));
       int i, j, k, mA_Rows, mA_Cols, mB_Rows, mB_Cols;
 
       mA_Rows = our_matrix[matrix_index1].rows;
@@ -353,26 +393,32 @@ int dotProductMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2,
         for(j = 0; j < mB_Cols; j++){
           float sum = 0.0;
           for(k = 0; k < mB_Rows; k++)
-              sum = sum + our_matrix[matrix_index1].data[i * mA_Cols + k] * our_matrix[matrix_index2].data[k * mB_Cols + j];
-          our_matrix[number_of_matrices].data[i * our_matrix[number_of_matrices].columns + j] = sum;
+              sum = sum + our_matrix[matrix_index1].data[i * mA_Cols + k] *
+                            our_matrix[matrix_index2].data[k * mB_Cols + j];
+          our_matrix[number_of_matrices].data[i *
+            our_matrix[number_of_matrices].columns + j] = sum;
         }
       }
 
       strcpy(our_matrix[number_of_matrices].matrixName, temp_name);
 
       printf("Success!\n");
-      printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n", number_of_matrices + 1, our_matrix[number_of_matrices].rows, our_matrix[number_of_matrices].columns,
-             our_matrix[number_of_matrices].matrixName);
+      printf("Matrix %i\t %i Rows\t %i Columns\t Name: %s\n",
+        number_of_matrices + 1, our_matrix[number_of_matrices].rows,
+        our_matrix[number_of_matrices].columns,
+        our_matrix[number_of_matrices].matrixName);
 
   return 1;
   }
   else{
-    printf("Matrices do not have required dimensions for multiplication. Try again.\n");
+    printf("Matrices do not have required dimensions for multiplication. "
+            "Try again.\n");
     return 0;
   }
 }
 
-void saveSessionToFile(matrix_t* matrices, int number_of_matrices, char* fileName){
+void saveSessionToFile(matrix_t* matrices, int number_of_matrices,
+                        char* fileName){
     int i, j, occurrence;
     float data;
     FILE* fp;
@@ -410,6 +456,7 @@ int loadSessionFromFile(matrix_t* matrix, char* file){
     dataLoc = 0;
     repeat = 0;
     fp = fopen(file, "r");
+    cleanString(dataHolder);
 
     inChar = getc(fp);
     while(inChar != EOF){
