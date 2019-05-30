@@ -44,6 +44,7 @@ while(logged_in == 0){
     if(chosen_user_option == 1){
       create_user(user, number_of_users);
       save_users_to_db(user, number_of_users);
+      encryptPassword(user, number_of_users);
       number_of_users++;
     }
     else if(chosen_user_option == 2){
@@ -60,25 +61,19 @@ printf("Login Successful\n");
 
   scanf("%s", chosen_option_char);
   chosen_option = atoi(&chosen_option_char[0]);
-  if(chosen_option == 1 ||
-     chosen_option == 2 ||
-     chosen_option == 3 ||
-     chosen_option == 4 ||
-     chosen_option == 5 ||
-     chosen_option == 6 ||
-     chosen_option == 7 ||
-     chosen_option == 8){
-    if(chosen_option == 1){
+  switch(chosen_option){
+    case 1:
       create_matrix(matrix, number_of_matrices);
       number_of_matrices++;
-    }
-    else if(chosen_option == 2){
+      break;
+    case 2:
       printMatrix(matrix, number_of_matrices);
-    }
-    else if(chosen_option == 3){
+      break;
+    case 3:
       setValues(matrix, number_of_matrices);
-    }
-    else if(chosen_option == 4){
+      break;
+    case 4:
+    {
       int addMatrixSuccessful = 0;
       showMatrixNames(matrix, number_of_matrices);
       printf("From the matrices above, which matrix do you want to add to? Enter the matrix number>\n");
@@ -92,8 +87,10 @@ printf("Login Successful\n");
       if(addMatrixSuccessful == 1){
       number_of_matrices++;
       }
+      break;
     }
-    else if(chosen_option == 5){
+    case 5:
+    {
       int subMatrixSuccessful = 0;
       showMatrixNames(matrix, number_of_matrices);
       printf("From the matrices above, which matrix do you want to subtract from? Enter the matrix number>\n");
@@ -107,11 +104,13 @@ printf("Login Successful\n");
       if(subMatrixSuccessful == 1){
       number_of_matrices++;
       }
+      break;
     }
-    else if(chosen_option == 6){
+    case 6:
       showMatrixNames(matrix, number_of_matrices);
-    }
-    else if(chosen_option == 7){
+      break;
+    case 7:
+    {
       int dotProductSuccessful = 0;
       showMatrixNames(matrix, number_of_matrices);
       printf("From the matrices above, which matrix do you want to multiply by? Enter the matrix number>\n");
@@ -125,18 +124,39 @@ printf("Login Successful\n");
       if(dotProductSuccessful){
         number_of_matrices++;
       }
+      break;
     }
-    else if(chosen_option == 8){
+    case 8:
+    {
+        char fileName[MAX_FILE_NAME];
+        printf("Name of saved session> ");
+        scanf("%s", fileName);
+        strcat(fileName, ".csv");
+        saveSessionToFile(matrix, number_of_matrices, fileName);
+        break;
+    }
+    case 9:
+    {
+        char fileName[MAX_FILE_NAME];
+        printf("Name of saved session> ");
+        scanf("%s", fileName);
+        strcat(fileName, ".csv");
+        number_of_matrices = loadSessionFromFile(matrix, fileName);
+        break;
+    }
+    case 10:
+    {
       int i;
       for(i = 0; i < number_of_matrices; i++){
         free(matrix[i].data);
       }
         /* deleteMatrix(new_matrix); */
         return 0;
-      }
-    else{
+      break;
+    }
+    default:
       printf("Invalid choice\n");
-      }
+      break;
    }
 }
 return 0;
@@ -156,8 +176,10 @@ void print_menu (void)
            "5. subtract matrices\n"
            "6. show names of stored matrices\n"
            "7. matrix multiplication\n"
-           "8. exit the program\n"
-           "Enter choice (number between 1-5)>\n");
+           "8. save matrices to file\n"
+           "9. load matrices from file\n"
+           "10. exit the program\n"
+           "Enter choice (number between 1-10)>\n");
 }
 
 

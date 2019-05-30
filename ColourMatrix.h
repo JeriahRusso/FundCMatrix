@@ -21,9 +21,10 @@
 
 /* Name of the db file */
 #define DB_NAME "db.txt"
+#define MAX_FILE_NAME 50
 
 struct matrix{
-    char matrixName[50];
+    char matrixName[MAX_FILE_NAME];
     int rows;
     int columns;
     float* data;
@@ -40,7 +41,7 @@ matrix_t matrices[MAX_MATRICES];
  */
 
 extern int create_matrix(matrix_t* matrixP, int matrixLocation);
- 
+
  /*extern float* create_matrix(int * cols1, int* rows);*/
 
 /* Frees any allocated memory for the supplied matrix */
@@ -63,3 +64,11 @@ int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, i
 void showMatrixNames(matrix_t* matrix, int number_of_matrices);
 
 int dotProductMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2, int number_of_matrices);
+
+void saveSessionToFile(matrix_t* matrices, int number_of_matrices, char* fileName);
+
+/*Returns the number of matrices loaded*/
+int loadSessionFromFile(matrix_t* matrix, char* file);
+
+/*Cleans a char[] to all 0*/
+void cleanString (char* string);

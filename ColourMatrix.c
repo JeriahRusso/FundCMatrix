@@ -142,11 +142,10 @@ int create_matrix(matrix_t* matrixP, int matrixLocation){
 
   float * our_matrix = (float *) malloc(rows * cols * sizeof(float));
 
-  int row = 0, col = 0;
-  for (row = 1; row <= rows; row++) {
-    for (col = 1; col <= cols; col++) {
-
-      our_matrix[(row-1) + (col-1) * cols] = 0;
+  int row, col;
+  for (row = 0; row < rows; row++) {
+    for (col = 0; col < cols; col++) {
+      our_matrix[(col) + (row) * cols] = 0;
     }
   }
 
@@ -371,4 +370,114 @@ int dotProductMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2,
     printf("Matrices do not have required dimensions for multiplication. Try again.\n");
     return 0;
   }
+}
+
+void saveSessionToFile(matrix_t* matrices, int number_of_matrices, char* fileName){
+    int i, j, occurrence;
+    float data;
+    FILE* fp;
+
+    fp = fopen(fileName, "w");
+    for(i = 0; i < number_of_matrices; i++){
+        occurrence = 0;
+        data = matrices[i].data[0];
+        fprintf(fp, "%s,", matrices[i].matrixName);
+        fprintf(fp, "%d,", matrices[i].rows);
+        fprintf(fp, "%d,", matrices[i].columns);
+        for(j = 0; j < matrices[i].rows * matrices[i].columns; j++){
+            if(matrices[i].data[j] == data){
+                occurrence++;
+            }else{
+                fprintf(fp, "%d,%f,", occurrence, data);
+                occurrence = 1;
+                data = matrices[i].data[j];
+            }
+        }
+        fprintf(fp, "%d,%f,\n", occurrence, data);
+    }
+    fclose(fp);
+}
+
+int loadSessionFromFile(matrix_t* matrix, char* file){
+    int stage, i, matrixNum, dataLoc, repeat;
+    FILE* fp;
+    char inChar;
+    char dataHolder[MAX_FILE_NAME];
+
+    i = 0;
+    stage = 0;
+    matrixNum = 0;
+    dataLoc = 0;
+    repeat = 0;
+    fp = fopen(file, "r");
+
+    inChar = getc(fp);
+    while(inChar != EOF){
+        while(inChar != ',' && inChar != '\n' && inChar != EOF){
+            dataHolder[i] = inChar;
+            i++;
+            inChar = getc(fp);
+        }
+        dataHolder[++i] = '\0';
+        if(inChar == ','){
+            switch(stage){
+                case 0:
+                    strcpy(matrix[matrixNum].matrixName, dataHolder);
+                    stage++;
+                    break;
+                case 1:
+                    matrix[matrixNum].rows = atoi(dataHolder);
+                    stage++;
+                    break;
+                case 2:
+                {
+                    matrix[matrixNum].columns = atoi(dataHolder);
+                    int row, col, rows, cols;
+                    rows = matrix[matrixNum].rows;
+                    cols = matrix[matrixNum].columns;
+                    float * our_matrix = (float *) malloc(rows * cols
+                                            * sizeof(float));
+
+                    for (row = 0; row < rows; row++) {
+                        for (col = 0; col < cols; col++) {
+                            our_matrix[(col) + (row) * cols] = 0;
+                        }
+                    }
+
+                    matrix[matrixNum].data = our_matrix;
+                    stage++;
+                    break;
+                }
+                case 3:
+                {
+                    repeat = atoi(dataHolder);
+                    stage++;
+                    break;
+                }
+                case 4:
+                {
+                    int rep;
+                    for(rep = 0; rep < repeat; rep++){
+                        matrix[matrixNum].data[dataLoc] = atof(dataHolder);
+                        dataLoc++;
+                    }
+                    stage--;
+                    break;
+                }
+            }
+            cleanString(dataHolder);
+            i = 0;
+        }else{
+            matrixNum++;
+            dataLoc = 0;
+            stage = 0;
+            cleanString(dataHolder);
+            i = 0;
+        }
+        if(inChar != EOF){
+            inChar = getc(fp);
+        }
+    }
+    fclose(fp);
+    return matrixNum;
 }
