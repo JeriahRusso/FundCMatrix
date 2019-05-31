@@ -78,13 +78,18 @@ printf("Login Successful\n");
     case 4:
     {
       int addMatrixSuccessful = 0;
+      if(number_of_matrices == 0){
+          printf("There are no matrices to use\n");
+          break;
+      }
+      printf("m1 + m2\n");
       showMatrixNames(matrix, number_of_matrices);
-      printf("From the matrices above, which matrix do you want to add to?"
+      printf("From the matrices above, select m1."
                 "Enter the matrix number>\n");
       scanf("%d", &matrix_index1);
       showMatrixNames(matrix, number_of_matrices);
-      printf("Which matrix would you like to add to Matrix %d? "
-                "Enter the matrix number>\n", matrix_index1);
+      printf("From the matrices above, select m2. "
+                "Enter the matrix number>\n");
       matrix_index1 -= 1;
       scanf("%d", &matrix_index2);
       matrix_index2 -= 1;
@@ -98,13 +103,18 @@ printf("Login Successful\n");
     case 5:
     {
       int subMatrixSuccessful = 0;
+      if(number_of_matrices == 0){
+          printf("There are no matrices to use\n");
+          break;
+      }
+      printf("m1 - m2\n");
       showMatrixNames(matrix, number_of_matrices);
-      printf("From the matrices above, which matrix do you want to subtract"
+      printf("From the matrices above, select m1."
                 "from? Enter the matrix number>\n");
       scanf("%d", &matrix_index1);
       showMatrixNames(matrix, number_of_matrices);
-      printf("Which matrix would you like to subtract from Matrix %d?"
-                "Enter the matrix number>\n", matrix_index1);
+      printf("From the matrices above, select m1."
+                "Enter the matrix number>\n");
       matrix_index1 -= 1;
       scanf("%d", &matrix_index2);
       matrix_index2 -= 1;
@@ -121,13 +131,18 @@ printf("Login Successful\n");
     case 7:
     {
       int dotProductSuccessful = 0;
+      if(number_of_matrices == 0){
+          printf("There are no matrices to use\n");
+          break;
+      }
       showMatrixNames(matrix, number_of_matrices);
-      printf("From the matrices above, which matrix do you want to multiply by?"
+      printf("m1 . m2\n");
+      printf("From the matrices above, select m1."
                 "Enter the matrix number>\n");
       scanf("%d", &matrix_index1);
       showMatrixNames(matrix, number_of_matrices);
-      printf("Which matrix would you like Matrix %d to multiply?"
-                "Enter the matrix number>\n", matrix_index1);
+      printf("From the matrices above, select m2."
+                "Enter the matrix number>\n");
       matrix_index1 -= 1;
       scanf("%d", &matrix_index2);
       matrix_index2 -= 1;
