@@ -77,16 +77,20 @@ void create_user(user_t* user, int number_of_users){
  * try their username and password again, cretae a new account,
  * or exit the program.
  */
-void user_login(user_t* user, int number_of_users){
+int user_login(user_t* user, int number_of_users){
   char dont_print[20];
   char do_print[20];
   char username_input[50];
   char password_input[50];
   int i, username_not_matched = 1, password_not_matched = 1;
+
+  if(number_of_users == 0){
+      printf("There are no users, please create an account to login.\n");
+      return 0;
+  }
+
   strcpy(dont_print, "stty -echo");
   strcpy(do_print, "stty echo");
-
-  while(username_not_matched == 1){
 
     printf("Enter your username:\n");
     scanf("%s", username_input);
@@ -96,11 +100,7 @@ void user_login(user_t* user, int number_of_users){
         username_not_matched = 0;
       }
     }
-  }
 
-  printf("Username matched\n");
-
-  while(password_not_matched == 1){
     printf("Enter your password:\n");
 
     system(dont_print);
@@ -113,7 +113,12 @@ void user_login(user_t* user, int number_of_users){
         password_not_matched = 0;
       }
     }
-  }
+
+    if(password_not_matched || username_not_matched){
+        printf("Username or password did not match.\n");
+        return 0;
+    }
+  return 1;
 }
 
 

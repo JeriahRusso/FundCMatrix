@@ -43,14 +43,15 @@ while(logged_in == 0){
   if(chosen_user_option == 1 ||
      chosen_user_option == 2){
     if(chosen_user_option == 1){
+      system("clear");
       create_user(user, number_of_users);
       save_users_to_db(user, number_of_users);
       encryptPassword(user, number_of_users);
       number_of_users++;
     }
     else if(chosen_user_option == 2){
-      user_login(user, number_of_users);
-      logged_in = 1;
+      system("clear");
+      logged_in = user_login(user, number_of_users);
     }
   }
 }
@@ -62,6 +63,7 @@ printf("Login Successful\n");
 
   scanf("%s", chosen_option_char);
   chosen_option = atoi(&chosen_option_char[0]);
+  system("clear");
   switch(chosen_option){
     case 1:
       create_matrix(matrix, number_of_matrices);

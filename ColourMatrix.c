@@ -27,6 +27,10 @@ int printMatrix(matrix_t* our_matrix, int number_of_matrices) {
   int row = 0, col = 0, i = 0;
 
   system("clear");
+  if(number_of_matrices == 0){
+      printf("There are no matrices to print.\n");
+      return 0;
+  }
   for(i = 0; i < number_of_matrices; i++){
     printf("Matrix %i\t %i Rows\t %i Columns - Name: %s\n", i+1,
         our_matrix[i].rows, our_matrix[i].columns, our_matrix[i].matrixName);
@@ -79,9 +83,7 @@ int printMatrix(matrix_t* our_matrix, int number_of_matrices) {
     printf(KNRM);
     printf("\n");
   }
-  printf(KNRM);                                 /* Set colour back to normal */
-  printf("Press ENTER to return to menu.");
-  getchar();
+  printf(KNRM);        /* Set colour back to normal */
     return 0;
 }
 
@@ -105,7 +107,11 @@ int create_matrix(matrix_t* matrixP, int matrixLocation){
   int row, col;
   for (row = 0; row < rows; row++) {
     for (col = 0; col < cols; col++) {
-      our_matrix[(col) + (row) * cols] = 0;
+      if(row == col || rows == 1 || cols == 1){
+          our_matrix[(col) + (row) * cols] = 1;
+      }else{
+        our_matrix[(col) + (row) * cols] = 0;
+      }
     }
   }
 
@@ -274,21 +280,21 @@ int subtractMatrix(matrix_t* our_matrix, int matrix_index1, int matrix_index2,
         for (col = 1; col <= our_matrix[number_of_matrices].columns; col++) {
              counter++;
           /* This bit sets the colour of the printer */
-          if(counter == 1 || counter % 8 == 1)
+          if(counter % 8 == 1)
             printf(KRED);
-          else if(counter == 2 || counter % 8 == 2)
+          else if(counter % 8 == 2)
             printf(KGRN);
-          else if(counter == 3 || counter % 8 == 3)
+          else if(counter % 8 == 3)
             printf(KYEL);
-          else if(counter == 4 || counter % 8 == 4)
+          else if(counter % 8 == 4)
             printf(KBLU);
-          else if(counter == 5 || counter % 8 == 5)
+          else if(counter % 8 == 5)
             printf(KMAG);
-          else if(counter == 6 || counter % 8 == 6)
+          else if(counter % 8 == 6)
             printf(KCYN);
-          else if(counter == 7 || counter % 8 == 7)
+          else if(counter % 8 == 7)
             printf(KWHT);
-          else if(counter == 8 || counter % 8 == 0)
+          else if(counter % 8 == 0)
             printf(KNRM);
 
           /*  printf(" %2.f ", *our_matrix[index].data+(col-1)*(row-1));  */
@@ -482,9 +488,4 @@ int loadSessionFromFile(matrix_t* matrix, char* file){
     fclose(fp);
     printf("Session successfully loaded from %s.\n", file);
     return matrixNum;
-}
-
-void clearInputBuffer(){
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF){}
 }

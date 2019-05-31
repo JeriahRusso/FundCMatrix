@@ -72,7 +72,7 @@ void create_user(user_t* user, int number_of_users);
  * try their username and password again, cretae a new account,
  * or exit the program.
  */
-void user_login(user_t* user, int number_of_users);
+int user_login(user_t* user, int number_of_users);
 
 
 /* Saves the username and password of all user accounts to a database file.
