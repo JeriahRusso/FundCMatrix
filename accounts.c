@@ -134,8 +134,8 @@ void save_users_to_db(user_t* user, int number_of_users){
 
   fp = fopen(DB_NAME, "w");
 
+  encryptPassword(user, number_of_users);
   for(i = 0; i <= number_of_users; i++){
-    encryptPassword(user, i);
     fprintf(fp, "%s ", user[i].username);
     for(j = 0; j < MAX_PASSWORD_LENGTH; j++){
         if(user[i].password[j] == '\0'){
