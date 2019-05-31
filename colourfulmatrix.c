@@ -139,23 +139,19 @@ printf("Login Successful\n");
     case 8:
     {
         char fileName[MAX_FILE_NAME];
-        char filePath[MAX_FILE_NAME + DIRECTORY_LENGTH] = SESSION_DIRECTORY;
         printf("Name of saved session> ");
         scanf("%s", fileName);
         strcat(fileName, ".csv");
-        strcat(filePath, fileName);
-        saveSessionToFile(matrix, number_of_matrices, filePath);
+        saveSessionToFile(matrix, number_of_matrices, fileName);
         break;
     }
     case 9:
     {
         char fileName[MAX_FILE_NAME];
-        char filePath[MAX_FILE_NAME + DIRECTORY_LENGTH] = SESSION_DIRECTORY;
         printf("Name of saved session> ");
         scanf("%s", fileName);
         strcat(fileName, ".csv");
-        strcat(filePath, fileName);
-        number_of_matrices = loadSessionFromFile(matrix, filePath);
+        number_of_matrices = loadSessionFromFile(matrix, fileName);
         break;
     }
     case 10:

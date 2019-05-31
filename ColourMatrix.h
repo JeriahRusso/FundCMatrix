@@ -83,3 +83,6 @@ int loadSessionFromFile(matrix_t* matrix, char* file);
 
 /*Cleans a char[] to all 0*/
 void cleanString (char* string);
+
+/*Clean the input buffer, required for some functionality to perform normally*/
+void clearInputBuffer();
